@@ -1,0 +1,82 @@
+doctype
+head
+	title БелМАПО
+	meta(charset='utf-8')
+	//- link(rel='stylesheet' href='css/main.css')
+	link(rel='stylesheet' href="css/main.css")
+	link(rel='stylesheet' href="css/bootstrap.min.css")
+	link(rel='stylesheet' href="css/animate.min.css")
+	link(rel='stylesheet' href="css/light-bootstrap-dashboard.css")
+	link(rel='stylesheet' href="css/demo.css")
+	link(rel='stylesheet' href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css")
+	link(rel='stylesheet' href="http://fonts.googleapis.com/css?family=Roboto:400,700,300" type='text/css')
+	link(rel='stylesheet' href="css/pe-icon-7-stroke.css")
+	link(rel='stylesheet' href="/node_modules/fancybox/dist/css/jquery.fancybox.css")
+	link(rel='stylesheet' href="css/jquery-ui.min.css")
+body
+	.wrapper
+		.sidebar(data-color="purple" data-image="img/sidebar-4.jpg")
+			.sidebar-wrapper
+				.logo
+					a(href="main.html").simple-text БелМАПО
+				ul.nav
+					li
+						a(href="main.html") Главная
+					li
+						a(href="studlist.html") Список
+					li
+						a(href="plan.html") Прогноз
+					li
+						a(href="#") Статистика
+			.sidebar-background(style="background-image: url(img/sidebar-4.jpg)")
+		.main-panel
+			nav.navbar.navbar-default.navbar-fixed
+				.container-fluid
+					.navbar-header
+						button.navbar-toggle(type="button" data-toggle="collapse" data-target="#navigation-example-2")
+							span.sr-only Toggle Navigation
+							span.icon-bar
+							span.icon-bar
+							span.icon-bar
+						a.navbar-brand(href="main.html") Админ панель
+					.collapse.navbar-collapse
+						ul.nav.navbar-nav.navbar-left
+							li.dropdown
+								a(href="#" data-toggle="dropdown").dropdown-toggle
+									i.fa.fa-globe
+									b.caret.hidden-sm.hidden-xs
+									span.notification.hidden-sm.hidden-xs 5
+									p.hidden-lg.hidden-md 5 Напоминаний
+										b.caret
+								ul.dropdown-menu
+									li
+										a(href="#") Напоминание 1
+									li
+										a(href="#") Напоминание 2
+									li
+										a(href="#") Напоминание 3
+									li
+										a(href="#") Напоминание 4
+									li
+										a(href="#") Напоминание 5
+							li
+								a(href="#")
+									i.fa.fa-search
+									p.hidden-lg.hidden-md Поиск
+						ul.nav.navbar-nav.navbar-right
+							li
+								a(href="index.html")
+									p Выход
+							li.separator.hidden-lg.hidden-md
+			block content
+	script(src="js/jquery-1.11.3.min.js")
+	script(src="js/bootstrap.min.js")
+	script(src="js/bootstrap-checkbox-radio-switch.js")
+	script(src="js/chartist.min.js")
+	script(src="js/bootstrap-notify.js")
+	script(src="js/light-bootstrap-dashboard.js")
+	script(src="js/demo.js")
+	script(src="js/canvasjs.min.js")
+	script(src="js/all.js")
+	script(src="js/jquery-ui.min.js")
+	script(src="js/ui.js")
