@@ -1,1 +1,611 @@
-!function(){var e,l,n;!function(t){function a(e,l){return x.call(e,l)}function r(e,l){var n,t,a,r,i,o,u,y,b,f,c,s,p=l&&l.split("/"),d=v.map,m=d&&d["*"]||{};if(e){for(e=e.split("/"),i=e.length-1,v.nodeIdCompat&&E.test(e[i])&&(e[i]=e[i].replace(E,"")),"."===e[0].charAt(0)&&p&&(s=p.slice(0,p.length-1),e=s.concat(e)),b=0;b<e.length;b++)if("."===(c=e[b]))e.splice(b,1),b-=1;else if(".."===c){if(0===b||1===b&&".."===e[2]||".."===e[b-1])continue;b>0&&(e.splice(b-1,2),b-=2)}e=e.join("/")}if((p||m)&&d){for(n=e.split("/"),b=n.length;b>0;b-=1){if(t=n.slice(0,b).join("/"),p)for(f=p.length;f>0;f-=1)if((a=d[p.slice(0,f).join("/")])&&(a=a[t])){r=a,o=b;break}if(r)break;!u&&m&&m[t]&&(u=m[t],y=b)}!r&&u&&(r=u,o=y),r&&(n.splice(0,o,r),e=n.join("/"))}return e}function i(e,l){return function(){var n=C.call(arguments,0);return"string"!=typeof n[0]&&1===n.length&&n.push(null),p.apply(t,n.concat([e,l]))}}function o(e){return function(l){return r(l,e)}}function u(e){return function(l){h[e]=l}}function y(e){if(a(g,e)){var l=g[e];delete g[e],w[e]=!0,s.apply(t,l)}if(!a(h,e)&&!a(w,e))throw new Error("No "+e);return h[e]}function b(e){var l,n=e?e.indexOf("!"):-1;return n>-1&&(l=e.substring(0,n),e=e.substring(n+1,e.length)),[l,e]}function f(e){return e?b(e):[]}function c(e){return function(){return v&&v.config&&v.config[e]||{}}}var s,p,d,m,h={},g={},v={},w={},x=Object.prototype.hasOwnProperty,C=[].slice,E=/\.js$/;d=function(e,l){var n,t=b(e),a=t[0],i=l[1];return e=t[1],a&&(a=r(a,i),n=y(a)),a?e=n&&n.normalize?n.normalize(e,o(i)):r(e,i):(e=r(e,i),t=b(e),a=t[0],e=t[1],a&&(n=y(a))),{f:a?a+"!"+e:e,n:e,pr:a,p:n}},m={require:function(e){return i(e)},exports:function(e){var l=h[e];return void 0!==l?l:h[e]={}},module:function(e){return{id:e,uri:"",exports:h[e],config:c(e)}}},s=function(e,l,n,r){var o,b,c,s,p,v,x,C=[],E=typeof n;if(r=r||e,v=f(r),"undefined"===E||"function"===E){for(l=!l.length&&n.length?["require","exports","module"]:l,p=0;p<l.length;p+=1)if(s=d(l[p],v),"require"===(b=s.f))C[p]=m.require(e);else if("exports"===b)C[p]=m.exports(e),x=!0;else if("module"===b)o=C[p]=m.module(e);else if(a(h,b)||a(g,b)||a(w,b))C[p]=y(b);else{if(!s.p)throw new Error(e+" missing "+b);s.p.load(s.n,i(r,!0),u(b),{}),C[p]=h[b]}c=n?n.apply(h[e],C):void 0,e&&(o&&o.exports!==t&&o.exports!==h[e]?h[e]=o.exports:c===t&&x||(h[e]=c))}else e&&(h[e]=n)},e=l=p=function(e,l,n,a,r){if("string"==typeof e)return m[e]?m[e](l):y(d(e,f(l)).f);if(!e.splice){if(v=e,v.deps&&p(v.deps,v.callback),!l)return;l.splice?(e=l,l=n,n=null):e=t}return l=l||function(){},"function"==typeof n&&(n=a,a=r),a?s(t,e,l,n):setTimeout(function(){s(t,e,l,n)},4),p},p.config=function(e){return p(e)},e._defined=h,n=function(e,l,n){if("string"!=typeof e)throw new Error("See almond README: incorrect module build, no module name");l.splice||(n=l,l=[]),a(h,e)||a(g,e)||(g[e]=[e,l,n])},n.amd={jQuery:!0}}(),n("../bower_components/almond/almond",function(){}),function(){window.onload=function(){var e,l,n,t,a,r;return t={theme:"theme1",title:{text:"Классификация по национальности"},animationEnabled:!0,data:[{type:"doughnut",dataPoints:[{name:"Беларусь",label:"Беларусь",y:30},{name:"Россия",label:"Россия",y:25},{name:"Украина",label:"Украина",y:28},{name:"Казахстан",label:"Казахстан",y:10},{name:"Таджикистан",label:"Таджикистан",y:15}]}]},n=new CanvasJS.Chart("NationalityChart",t),n.render(),l={theme:"theme1",title:{text:"Классификация по факультетам"},animationEnabled:!0,data:[{type:"column",dataPoints:[{label:"Хирургический факультет",y:354},{label:"Терапевтический факультет",y:543},{label:"Педиатрический факультет",y:123},{label:"Факультет общественного здоровьяbr> и здравоохранения",y:434}]}]},e=new CanvasJS.Chart("FacultyChart",l),e.render(),r={theme:"theme1",title:{text:"Классификация по специальностям"},animationEnabled:!0,data:[{type:"column",dataPoints:[{label:"Кафедра анестезиологии и реаниматологии",y:120},{label:"Кафедра челюстно-лицевой хирургии",y:110},{label:"Кафедра хирургии",y:130},{label:"Кафедра трансплантологии",y:104},{label:"Кафедра урологии и нефрологии",y:105},{label:"Кафедра травматологии и ортопедии",y:150},{label:"Кафедра пластической хирургии и комбустиологии",y:143},{label:"Кафедра терапевтической стоматологии",y:112},{label:"Кафедра офтальмологии",y:165},{label:"Кафедра оториноларингологии",y:243},{label:"Кафедра ортопедической стоматологии и ортодонтии с курсом детской стоматологии",y:235},{label:"Кафедра онкологии",y:344},{label:"Кафедра общей стоматологии",y:130},{label:"Кафедра неотложной хирургии",y:160},{label:"Кафедра кардиохирургии",y:104},{label:"Кафедра геронтологии и гериатрии с курсом аллергологии и профпатологии",y:123},{label:"Кафедра гастроэнтерологии и нутрициологии",y:154},{label:"Кафедра дерматовенерологии и косметологии",y:187},{label:"Кафедра кардиологии и ревматологии",y:156},{label:"Кафедра клинической фармакологии и фармакотерапии",y:234},{label:"Кафедра неврологии и нейрохирургии",y:345},{label:"Кафедра психиатрии и наркологии",y:123},{label:"Кафедра пульмонологии и фтизиатрии",y:152},{label:"Кафедра рефлексотерапии",y:354},{label:"Кафедра функциональной диагностики",y:232},{label:"Кафедра эндокринологии",y:342},{label:"Кафедра акушерства и гинекологии",y:122},{label:"Кафедра акушерства, гинекологии и репродуктивного здоровья",y:245},{label:"Кафедра детской анестезиологии и реаниматологии",y:222},{label:"Кафедра детской неврологии",y:232},{label:"Кафедра детской онкологии и гематологии",y:150},{label:"Кафедра детской хирургии",y:190},{label:"Кафедра неонатологии и медицинской генетики",y:166},{label:"Кафедра инфекционных болезней и детских инфекций",y:144},{label:"Кафедра клинической гематологии и трансфузиологии",y:223},{label:"Кафедра педиатрии",y:234},{label:"Кафедра поликлинической педиатрии",y:235},{label:"Кафедра психотерапии и медицинской психологии",y:293},{label:"Кафедра физиотерапии и курортологии",y:274},{label:"Кафедра гигиены и медицинской экологии",y:186},{label:"Кафедра клинической лабораторной диагностики",y:245},{label:"Кафедра лучевой диагностики",y:234},{label:"Кафедра медицинской экспертизы и реабилитации",y:254},{label:"Кафедра общественного здоровья и здравоохранения",y:255},{label:"Кафедра общей врачебной практики",y:231},{label:"Кафедра спортивной медицины и лечебной физической культуры",y:128},{label:"Кафедра скорой медицинской помощи и медицины катастроф",y:256},{label:"Кафедра ультразвуковой диагностики",y:322},{label:"Кафедра экономики и бухгалтерского учёта в здравоохранении с курсом медицинской информатики",y:234},{label:"Кафедра эпидемиологии и микробиологии",y:258}]}]},a=new CanvasJS.Chart("SpecialityChart",r),a.render()}}.call(this),n("charts",function(){}),l(["charts"])}();
+/**
+ * @license almond 0.3.3 Copyright jQuery Foundation and other contributors.
+ * Released under MIT license, http://github.com/requirejs/almond/LICENSE
+ */
+//Going sloppy to avoid 'use strict' string cost, but strict practices should
+//be followed.
+/*global setTimeout: false */
+
+var requirejs, require, define;
+(function (undef) {
+    var main, req, makeMap, handlers,
+        defined = {},
+        waiting = {},
+        config = {},
+        defining = {},
+        hasOwn = Object.prototype.hasOwnProperty,
+        aps = [].slice,
+        jsSuffixRegExp = /\.js$/;
+
+    function hasProp(obj, prop) {
+        return hasOwn.call(obj, prop);
+    }
+
+    /**
+     * Given a relative module name, like ./something, normalize it to
+     * a real name that can be mapped to a path.
+     * @param {String} name the relative name
+     * @param {String} baseName a real name that the name arg is relative
+     * to.
+     * @returns {String} normalized name
+     */
+    function normalize(name, baseName) {
+        var nameParts, nameSegment, mapValue, foundMap, lastIndex,
+            foundI, foundStarMap, starI, i, j, part, normalizedBaseParts,
+            baseParts = baseName && baseName.split("/"),
+            map = config.map,
+            starMap = (map && map['*']) || {};
+
+        //Adjust any relative paths.
+        if (name) {
+            name = name.split('/');
+            lastIndex = name.length - 1;
+
+            // If wanting node ID compatibility, strip .js from end
+            // of IDs. Have to do this here, and not in nameToUrl
+            // because node allows either .js or non .js to map
+            // to same file.
+            if (config.nodeIdCompat && jsSuffixRegExp.test(name[lastIndex])) {
+                name[lastIndex] = name[lastIndex].replace(jsSuffixRegExp, '');
+            }
+
+            // Starts with a '.' so need the baseName
+            if (name[0].charAt(0) === '.' && baseParts) {
+                //Convert baseName to array, and lop off the last part,
+                //so that . matches that 'directory' and not name of the baseName's
+                //module. For instance, baseName of 'one/two/three', maps to
+                //'one/two/three.js', but we want the directory, 'one/two' for
+                //this normalization.
+                normalizedBaseParts = baseParts.slice(0, baseParts.length - 1);
+                name = normalizedBaseParts.concat(name);
+            }
+
+            //start trimDots
+            for (i = 0; i < name.length; i++) {
+                part = name[i];
+                if (part === '.') {
+                    name.splice(i, 1);
+                    i -= 1;
+                } else if (part === '..') {
+                    // If at the start, or previous value is still ..,
+                    // keep them so that when converted to a path it may
+                    // still work when converted to a path, even though
+                    // as an ID it is less than ideal. In larger point
+                    // releases, may be better to just kick out an error.
+                    if (i === 0 || (i === 1 && name[2] === '..') || name[i - 1] === '..') {
+                        continue;
+                    } else if (i > 0) {
+                        name.splice(i - 1, 2);
+                        i -= 2;
+                    }
+                }
+            }
+            //end trimDots
+
+            name = name.join('/');
+        }
+
+        //Apply map config if available.
+        if ((baseParts || starMap) && map) {
+            nameParts = name.split('/');
+
+            for (i = nameParts.length; i > 0; i -= 1) {
+                nameSegment = nameParts.slice(0, i).join("/");
+
+                if (baseParts) {
+                    //Find the longest baseName segment match in the config.
+                    //So, do joins on the biggest to smallest lengths of baseParts.
+                    for (j = baseParts.length; j > 0; j -= 1) {
+                        mapValue = map[baseParts.slice(0, j).join('/')];
+
+                        //baseName segment has  config, find if it has one for
+                        //this name.
+                        if (mapValue) {
+                            mapValue = mapValue[nameSegment];
+                            if (mapValue) {
+                                //Match, update name to the new value.
+                                foundMap = mapValue;
+                                foundI = i;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (foundMap) {
+                    break;
+                }
+
+                //Check for a star map match, but just hold on to it,
+                //if there is a shorter segment match later in a matching
+                //config, then favor over this star map.
+                if (!foundStarMap && starMap && starMap[nameSegment]) {
+                    foundStarMap = starMap[nameSegment];
+                    starI = i;
+                }
+            }
+
+            if (!foundMap && foundStarMap) {
+                foundMap = foundStarMap;
+                foundI = starI;
+            }
+
+            if (foundMap) {
+                nameParts.splice(0, foundI, foundMap);
+                name = nameParts.join('/');
+            }
+        }
+
+        return name;
+    }
+
+    function makeRequire(relName, forceSync) {
+        return function () {
+            //A version of a require function that passes a moduleName
+            //value for items that may need to
+            //look up paths relative to the moduleName
+            var args = aps.call(arguments, 0);
+
+            //If first arg is not require('string'), and there is only
+            //one arg, it is the array form without a callback. Insert
+            //a null so that the following concat is correct.
+            if (typeof args[0] !== 'string' && args.length === 1) {
+                args.push(null);
+            }
+            return req.apply(undef, args.concat([relName, forceSync]));
+        };
+    }
+
+    function makeNormalize(relName) {
+        return function (name) {
+            return normalize(name, relName);
+        };
+    }
+
+    function makeLoad(depName) {
+        return function (value) {
+            defined[depName] = value;
+        };
+    }
+
+    function callDep(name) {
+        if (hasProp(waiting, name)) {
+            var args = waiting[name];
+            delete waiting[name];
+            defining[name] = true;
+            main.apply(undef, args);
+        }
+
+        if (!hasProp(defined, name) && !hasProp(defining, name)) {
+            throw new Error('No ' + name);
+        }
+        return defined[name];
+    }
+
+    //Turns a plugin!resource to [plugin, resource]
+    //with the plugin being undefined if the name
+    //did not have a plugin prefix.
+    function splitPrefix(name) {
+        var prefix,
+            index = name ? name.indexOf('!') : -1;
+        if (index > -1) {
+            prefix = name.substring(0, index);
+            name = name.substring(index + 1, name.length);
+        }
+        return [prefix, name];
+    }
+
+    //Creates a parts array for a relName where first part is plugin ID,
+    //second part is resource ID. Assumes relName has already been normalized.
+    function makeRelParts(relName) {
+        return relName ? splitPrefix(relName) : [];
+    }
+
+    /**
+     * Makes a name map, normalizing the name, and using a plugin
+     * for normalization if necessary. Grabs a ref to plugin
+     * too, as an optimization.
+     */
+    makeMap = function (name, relParts) {
+        var plugin,
+            parts = splitPrefix(name),
+            prefix = parts[0],
+            relResourceName = relParts[1];
+
+        name = parts[1];
+
+        if (prefix) {
+            prefix = normalize(prefix, relResourceName);
+            plugin = callDep(prefix);
+        }
+
+        //Normalize according
+        if (prefix) {
+            if (plugin && plugin.normalize) {
+                name = plugin.normalize(name, makeNormalize(relResourceName));
+            } else {
+                name = normalize(name, relResourceName);
+            }
+        } else {
+            name = normalize(name, relResourceName);
+            parts = splitPrefix(name);
+            prefix = parts[0];
+            name = parts[1];
+            if (prefix) {
+                plugin = callDep(prefix);
+            }
+        }
+
+        //Using ridiculous property names for space reasons
+        return {
+            f: prefix ? prefix + '!' + name : name, //fullName
+            n: name,
+            pr: prefix,
+            p: plugin
+        };
+    };
+
+    function makeConfig(name) {
+        return function () {
+            return (config && config.config && config.config[name]) || {};
+        };
+    }
+
+    handlers = {
+        require: function (name) {
+            return makeRequire(name);
+        },
+        exports: function (name) {
+            var e = defined[name];
+            if (typeof e !== 'undefined') {
+                return e;
+            } else {
+                return (defined[name] = {});
+            }
+        },
+        module: function (name) {
+            return {
+                id: name,
+                uri: '',
+                exports: defined[name],
+                config: makeConfig(name)
+            };
+        }
+    };
+
+    main = function (name, deps, callback, relName) {
+        var cjsModule, depName, ret, map, i, relParts,
+            args = [],
+            callbackType = typeof callback,
+            usingExports;
+
+        //Use name if no relName
+        relName = relName || name;
+        relParts = makeRelParts(relName);
+
+        //Call the callback to define the module, if necessary.
+        if (callbackType === 'undefined' || callbackType === 'function') {
+            //Pull out the defined dependencies and pass the ordered
+            //values to the callback.
+            //Default to [require, exports, module] if no deps
+            deps = !deps.length && callback.length ? ['require', 'exports', 'module'] : deps;
+            for (i = 0; i < deps.length; i += 1) {
+                map = makeMap(deps[i], relParts);
+                depName = map.f;
+
+                //Fast path CommonJS standard dependencies.
+                if (depName === "require") {
+                    args[i] = handlers.require(name);
+                } else if (depName === "exports") {
+                    //CommonJS module spec 1.1
+                    args[i] = handlers.exports(name);
+                    usingExports = true;
+                } else if (depName === "module") {
+                    //CommonJS module spec 1.1
+                    cjsModule = args[i] = handlers.module(name);
+                } else if (hasProp(defined, depName) ||
+                           hasProp(waiting, depName) ||
+                           hasProp(defining, depName)) {
+                    args[i] = callDep(depName);
+                } else if (map.p) {
+                    map.p.load(map.n, makeRequire(relName, true), makeLoad(depName), {});
+                    args[i] = defined[depName];
+                } else {
+                    throw new Error(name + ' missing ' + depName);
+                }
+            }
+
+            ret = callback ? callback.apply(defined[name], args) : undefined;
+
+            if (name) {
+                //If setting exports via "module" is in play,
+                //favor that over return value and exports. After that,
+                //favor a non-undefined return value over exports use.
+                if (cjsModule && cjsModule.exports !== undef &&
+                        cjsModule.exports !== defined[name]) {
+                    defined[name] = cjsModule.exports;
+                } else if (ret !== undef || !usingExports) {
+                    //Use the return value from the function.
+                    defined[name] = ret;
+                }
+            }
+        } else if (name) {
+            //May just be an object definition for the module. Only
+            //worry about defining if have a module name.
+            defined[name] = callback;
+        }
+    };
+
+    requirejs = require = req = function (deps, callback, relName, forceSync, alt) {
+        if (typeof deps === "string") {
+            if (handlers[deps]) {
+                //callback in this case is really relName
+                return handlers[deps](callback);
+            }
+            //Just return the module wanted. In this scenario, the
+            //deps arg is the module name, and second arg (if passed)
+            //is just the relName.
+            //Normalize module name, if it contains . or ..
+            return callDep(makeMap(deps, makeRelParts(callback)).f);
+        } else if (!deps.splice) {
+            //deps is a config object, not an array.
+            config = deps;
+            if (config.deps) {
+                req(config.deps, config.callback);
+            }
+            if (!callback) {
+                return;
+            }
+
+            if (callback.splice) {
+                //callback is an array, which means it is a dependency list.
+                //Adjust args if there are dependencies
+                deps = callback;
+                callback = relName;
+                relName = null;
+            } else {
+                deps = undef;
+            }
+        }
+
+        //Support require(['a'])
+        callback = callback || function () {};
+
+        //If relName is a function, it is an errback handler,
+        //so remove it.
+        if (typeof relName === 'function') {
+            relName = forceSync;
+            forceSync = alt;
+        }
+
+        //Simulate async callback;
+        if (forceSync) {
+            main(undef, deps, callback, relName);
+        } else {
+            //Using a non-zero value because of concern for what old browsers
+            //do, and latest browsers "upgrade" to 4 if lower value is used:
+            //http://www.whatwg.org/specs/web-apps/current-work/multipage/timers.html#dom-windowtimers-settimeout:
+            //If want a value immediately, use require('id') instead -- something
+            //that works in almond on the global level, but not guaranteed and
+            //unlikely to work in other AMD implementations.
+            setTimeout(function () {
+                main(undef, deps, callback, relName);
+            }, 4);
+        }
+
+        return req;
+    };
+
+    /**
+     * Just drops the config on the floor, but returns req in case
+     * the config return value is used.
+     */
+    req.config = function (cfg) {
+        return req(cfg);
+    };
+
+    /**
+     * Expose module registry for debugging and tooling
+     */
+    requirejs._defined = defined;
+
+    define = function (name, deps, callback) {
+        if (typeof name !== 'string') {
+            throw new Error('See almond README: incorrect module build, no module name');
+        }
+
+        //This module may not have dependencies
+        if (!deps.splice) {
+            //deps is not an array, so probably means
+            //an object literal or factory function for
+            //the value. Adjust args.
+            callback = deps;
+            deps = [];
+        }
+
+        if (!hasProp(defined, name) && !hasProp(waiting, name)) {
+            waiting[name] = [name, deps, callback];
+        }
+    };
+
+    define.amd = {
+        jQuery: true
+    };
+}());
+
+define("../bower_components/almond/almond", function(){});
+
+var app;
+
+app = angular.module('belmapo', [], function($httpProvider) {
+  $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+  $httpProvider.defaults.transformRequest = [
+    function(data) {
+      var param;
+      param = function(obj) {
+        var fullSubName, i, j, k, l, len, name, query, ref, ref1, subName, subValue, value;
+        query = '';
+        for (name in obj) {
+          value = obj[name];
+          if (value instanceof Array) {
+            for (i = j = 0, ref = value.length; 0 <= ref ? j <= ref : j >= ref; i = 0 <= ref ? ++j : --j) {
+              subValue = value[i];
+              fullSubName = name + '[' + i + ']';
+              innerObj[fullSubName] = subValue;
+              query += param(innerObj) + '&';
+            }
+          } else if (value instanceof Object) {
+            for (k = 0, len = value.length; k < len; k++) {
+              subName = value[k];
+              for (i = l = 0, ref1 = value.length; 0 <= ref1 ? l <= ref1 : l >= ref1; i = 0 <= ref1 ? ++l : --l) {
+                subValue = value[subName];
+                fullSubName = name + '[' + subName + ']';
+                innerObj[fullSubName] = subValue;
+                query += param(innerObj) + '&';
+              }
+            }
+          } else if (value !== void 0 && value !== null) {
+            query += encodeURIComponent(name) + '=' + encodeURIComponent(value) + '&';
+          }
+        }
+        if (query.length) {
+          return query.substr(0, query.length - 1);
+        } else {
+          return query;
+        }
+      };
+      if (angular.isObject(data) && String(data) !== '[object File]') {
+        return param(data);
+      } else {
+        return data;
+      }
+    }
+  ];
+});
+
+app.controller("LastList", [
+  'getListService', '$scope', function(getListService, $scope) {
+    $scope.list = {};
+    return getListService.get().then(function(data) {
+      return $scope.list = data.data;
+    });
+  }
+]);
+
+app.controller("NationalityCtrl", [
+  'getNationalityService', '$scope', function(getNationalityService, $scope) {
+    var nationalityList;
+    nationalityList = [];
+    $('#NationalityChart').preloader('start');
+    return getNationalityService.get().then(function(data) {
+      var NationalityChart, NationalityConfig, j, len, nationality;
+      nationalityList = data.data;
+      for (j = 0, len = nationalityList.length; j < len; j++) {
+        nationality = nationalityList[j];
+        nationality.y = parseInt(nationality.y);
+      }
+      NationalityConfig = {
+        theme: "theme1",
+        title: {
+          text: "Классификация по национальности"
+        },
+        animationEnabled: true,
+        data: [
+          {
+            type: "doughnut",
+            dataPoints: nationalityList
+          }
+        ]
+      };
+      $('#NationalityChart').preloader('stop');
+      NationalityChart = new CanvasJS.Chart("NationalityChart", NationalityConfig);
+      return NationalityChart.render();
+    });
+  }
+]);
+
+app.controller("FacultyCtrl", [
+  'getFacultyService', '$scope', function(getFacultyService, $scope) {
+    var faculties;
+    faculties = [];
+    return getFacultyService.get().then(function(data) {
+      var FactultyChart, FacultyConfig, faculty, facultyList, j, len;
+      facultyList = data.data;
+      for (j = 0, len = facultyList.length; j < len; j++) {
+        faculty = facultyList[j];
+        faculty.y = parseInt(faculty.y);
+      }
+      FacultyConfig = {
+        theme: "theme1",
+        title: {
+          text: "Статистика по факультетам"
+        },
+        animationEnabled: true,
+        data: [
+          {
+            type: "doughnut",
+            dataPoints: facultyList
+          }
+        ]
+      };
+      FactultyChart = new CanvasJS.Chart("FacultyChart", FacultyConfig);
+      return FactultyChart.render();
+    });
+  }
+]);
+
+$("#age").slider({
+  min: 0,
+  max: 100,
+  range: true,
+  values: [20, 50],
+  slide: function(event, ui) {
+    $("#fromAge").html(ui.values[0]);
+    return $("#toAge").html(ui.values[1]);
+  }
+});
+
+define("main", function(){});
+
+app.factory("getListService", function($http) {
+  return {
+    get: function() {
+      return $http.get('./php/getInfo.php?info=lastten');
+    }
+  };
+});
+
+define("getLastList", function(){});
+
+app.factory("getNationalityService", function($http) {
+  return {
+    get: function() {
+      return $http.get('./php/getInfo.php?info=nationality');
+    }
+  };
+});
+
+define("getNationalityService", function(){});
+
+app.factory("getFacultyService", function($http) {
+  return {
+    get: function() {
+      return $http.get('./php/getInfo.php?info=faculty');
+    }
+  };
+});
+
+define("getFacultyService", function(){});
+
+app.factory("getSpecialityService", function($http) {
+  return {
+    get: function() {
+      return $http.get('./php/getInfo.php?info=speciality');
+    }
+  };
+});
+
+define("getSpecialityService", function(){});
+
+
+require(["main", "getLastList", "getNationalityService", "getFacultyService", "getSpecialityService"]);

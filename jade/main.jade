@@ -8,71 +8,40 @@ block content
 								.header
 									h4.title Последние зачисленные
 									p.category Список последних зачисленных слушателей
-								.content.table-responsive.table-full-width
+								.content.table-responsive.table-full-width(ng-controller="LastList")
 									table.table.table-hover.table-striped
 										thead
-											th Имя
-											th Фамилия
-											th Отчество
-											th Дата рождения
+											th Дата
 											th Факультет
 											th Кафедра
-											th Дата зачисления
+											th Курс
+											th Группа
+											th Тип обучения
+											th Место проживания
+											th Форма обучения
+											th Направление-счёт
+											th Номер документа
+											th Статус
 										tbody
-											tr
-												td Алина
-												td Абельская
-												td Степановна
-												td 01.06.1965
-												td Педиатрический факультет
-												td Кафедра акушества и генекологии
-												td 11.10.2016
-											tr
-												td Дмитрий
-												td Абельский
-												td Евгеньевич
-												td 10.06.1963
-												td Терапевтический факультет
-												td Кафедра рефлексотерапии
-												td 22.02.2017
-											tr
-												td Ростислав
-												td Абрамчик
-												td Ростиславович
-												td 09.06.1966
-												td Хирургический факультет
-												td Кафедра хирургии
-												td 18.03.2017
-											tr
-												td Ияд
-												td Абу-Варда
-												td Фаридович
-												td 02.06.1962
-												td Терапевтический факультет
-												td Кафедра рефлексотерапии
-												td 22.02.2017
-											tr
-												td Игорь
-												td Адзерихо
-												td Эдуардович
-												td 16.06.1960
-												td Факультет общественного здоровья
-												td Кафедра гигиены и медицинской экологии
-												td 15.03.2017
-											tr
-												td Олег
-												td Айзберг
-												td Романович
-												td 25.06.1968
-												td Хирургический факультет
-												td Кафедра хирургии
-												td 18.03.2017
+											tr(ng-repeat="arrive in list")
+												td {{ arrive.Date | date: "d MMMM yyyy" }}
+												td {{ arrive.FacultName }}
+												td {{ arrive.CathName }}
+												td {{ arrive.CourceName }}
+												td {{ arrive.GroupNum}}
+												td {{ arrive.EducType}}
+												td {{ arrive.ResidPlace}}
+													span(ng-show="{{ arrive.ResidPlace === ''}}") Не указано
+												td {{ arrive.FormEduc}}
+												td {{ arrive.Dic-count }}
+												td {{ arrive.DocNumber }}
+												td {{ arrive.Status }}
 						.col-md-6
 							.card
 								.header
 									h4.title Слушатели
 									p.category По категориям
-								.content
+								.content(ng-controller="NationalityCtrl")
 									#NationalityChart.ct-chart.ct-perfect-fourth
 									.footer
 										.legend Open Bounce Unsubscribe
@@ -83,19 +52,8 @@ block content
 								.header
 									h4.title Слушатели
 									p.category По категориям
-								.content
+								.content(ng-controller="FacultyCtrl")
 									#FacultyChart.ct-chart.ct-perfect-fourth
-									.footer
-										.legend Open Bounce Unsubscribe
-										hr
-										.stats Campaign sent 2 days ago
-						.col-md-12
-							.card
-								.header
-									h4.title Количество слушателей
-									p.category По специальностям
-								.content
-									#SpecialityChart.ct-chart.ct-perfect-fourth
 									.footer
 										.legend Open Bounce Unsubscribe
 										hr

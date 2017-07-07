@@ -11,9 +11,9 @@ head
 	link(rel='stylesheet' href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css")
 	link(rel='stylesheet' href="http://fonts.googleapis.com/css?family=Roboto:400,700,300" type='text/css')
 	link(rel='stylesheet' href="css/pe-icon-7-stroke.css")
-	link(rel='stylesheet' href="/node_modules/fancybox/dist/css/jquery.fancybox.css")
+	link(rel='stylesheet' href="node_modules/fancybox/dist/css/jquery.fancybox.css")
 	link(rel='stylesheet' href="css/jquery-ui.min.css")
-body
+body(ng-app="belmapo")
 	.wrapper
 		.sidebar(data-color="purple" data-image="img/sidebar-4.jpg")
 			.sidebar-wrapper
@@ -21,13 +21,21 @@ body
 					a(href="main.html").simple-text БелМАПО
 				ul.nav
 					li
-						a(href="main.html") Главная
+						a(href="main.html") 
+							i.pe-7s-home
+							p Главная
 					li
-						a(href="studlist.html") Список
+						a(href="studlist.html") 
+							i.pe-7s-note2
+							p Реестр врачей
 					li
-						a(href="plan.html") Прогноз
+						a(href="plan.html") 
+							i.pe-7s-graph
+							p Прогноз
 					li
-						a(href="#") Статистика
+						a(href="#") 
+							i.pe-7s-graph
+							p Статистика
 			.sidebar-background(style="background-image: url(img/sidebar-4.jpg)")
 		.main-panel
 			nav.navbar.navbar-default.navbar-fixed
@@ -70,13 +78,17 @@ body
 							li.separator.hidden-lg.hidden-md
 			block content
 	script(src="js/jquery-1.11.3.min.js")
+	script(src="js/angular.js")
+	script(src="js/angular-locale_ru-ru.js")
 	script(src="js/bootstrap.min.js")
 	script(src="js/bootstrap-checkbox-radio-switch.js")
-	script(src="js/chartist.min.js")
 	script(src="js/bootstrap-notify.js")
 	script(src="js/light-bootstrap-dashboard.js")
 	script(src="js/demo.js")
-	script(src="js/canvasjs.min.js")
-	script(src="js/all.js")
+	script(src="https://canvasjs.com/assets/script/canvasjs.min.js")
 	script(src="js/jquery-ui.min.js")
 	script(src="js/ui.js")
+	
+	script(src="js/all.js")
+	script(src="js/Doctors.js")
+	script(src="js/preloader.js")

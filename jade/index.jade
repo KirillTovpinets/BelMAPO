@@ -4,7 +4,9 @@ head
 	title БелМАПО
 	meta(charset='utf-8')
 	link(rel="stylesheet", href="css/registerform.css")
-body
+	//- script(src="js/angular.js")
+	script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js")
+body(ng-app="login")
 	.login-page
 		.form
 			form.register-form
@@ -15,15 +17,13 @@ body
 				button Создать
 				p.message Уже зарегистрированы?
 					a(href="#")  Войти
-			form.login-form
+			form.login-form( method="post" name="LoginForm" action="php/login.php")
 				h1 БелМАПО
-				input(type="text" placeholder="логин")
-				input(type="password" placeholder="пароль")
+				input(type="text" placeholder="логин" ng-class="{error: LoginForm.login.$invalid && LoginForm.login.$touched}"  required name="login")
+				input(type="password" placeholder="пароль" ng-class="{error: LoginForm.password.$invalid && LoginForm.password.$touched}" required name="password")
 				button войти
 				p.message Не зарегистрированы?
 					a(href="#")  Создать аккаунт
+	
 	script(src="js/jquery-1.11.3.min.js")
-	script(src="js/registerform.js")
-
-	
-	
+	script(src="js/Angular/login.js")

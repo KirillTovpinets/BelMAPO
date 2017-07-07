@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:300)
+//@import url(https://fonts.googleapis.com/css?family=Roboto:300)
 
 .login-page
 	width: 360px
@@ -40,6 +40,7 @@
 	transition: all 0.3 ease
 	cursor: pointer
 
+.form input[type="submit"],
 .form button
 	font-family: "Roboto", sans-serif
 	text-transform: uppercase
@@ -54,6 +55,7 @@
 	transition: all 0.3 ease
 	cursor: pointer
 
+.form input[type="submit"]:hover, .form input[type="submit"]:active, .form input[type="submit"]:focus
 .form button:hover, .form button:active, .form button:focus
 	background: #43a047
 	
@@ -69,6 +71,9 @@
 .form .register-form
 	display: none
 
+.form .error
+	border: 1px solid #91221F
+	box-shadow: 0 0 10px 0 #a94442
 
 .container
 	position: relative
