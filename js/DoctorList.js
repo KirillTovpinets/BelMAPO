@@ -6,16 +6,21 @@ app.controller("OptionsCtrl", [
     $scope.qualification = [];
     $scope.category = [];
     $scope.doctors = [];
-    $scope.find = {};
-    $scope.options = [
-      {
+    $scope.find = {
+      gender: {
         id: '1',
-        name: "Мужской"
-      }, {
-        id: '2',
-        name: "Женский"
-      }
-    ];
+        name: 'Мужской'
+      },
+      options: [
+        {
+          id: '1',
+          name: "Мужской"
+        }, {
+          id: '2',
+          name: "Женский"
+        }
+      ]
+    };
     getOptions.get().then(function(data) {
       var app, est, mainQualification, mainSpeciality, makeAuto, otherQualification, otherSpeciality, repQualification, repSpeciality;
       makeAuto = function(data) {

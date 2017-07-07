@@ -19,15 +19,16 @@
 // qualification_other
 
 	$mysqli = mysqli_connect($host, $user, $passwd, $dbname) or die ("Ошибка подключения: " . mysqli_connect_error());
-	$query = "SELECT surname, name, patername, birthday FROM personal_card ";
+	$query = "SELECT surname, name, patername, birthday FROM personal_card WHERE surname LIKE '$surname'";
 
-	if (isset($surname)) {
-		$query .= "WHERE surname LIKE '$surname'";
-	}else if(!(isset($surname) && isset($establishment)){
-		$query .= "INNER JOIN personal_establishment ON personal_card.ee = personal_establishment.id WHERE personal_establishment.name LIKE '$establishment'";
-	}else if(isset($surname) && isset($establishment)){
-		$query .= "INNER JOIN personal_establishment ON personal_card.ee = personal_establishment.id WHERE personal_establishment.name LIKE '$establishment' AND personal_card.surname LIKE '$surname'";
-	}
+	// if ($surname != '') {
+	// 	$query .= " LIMIT 20";
+	// }
+	// else if(!(isset($surname) && isset($establishment)){
+	// 	$query .= "INNER JOIN personal_establishment ON personal_card.ee = personal_establishment.id WHERE personal_establishment.name LIKE '$establishment'";
+	// }else if(isset($surname) && isset($establishment)){
+	// 	$query .= "INNER JOIN personal_establishment ON personal_card.ee = personal_establishment.id WHERE personal_establishment.name LIKE '$establishment' AND personal_card.surname LIKE '$surname'";
+	// }
 	
 	$result = $mysqli->query($query) or die ("Ошибка запроса: " . mysqli_error($mysqli));
 	mysqli_close($mysqli);

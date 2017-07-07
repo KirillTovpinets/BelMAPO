@@ -10,7 +10,7 @@ app.controller "OptionsCtrl", ["getOptions", "findDoctor", "$scope", (getOptions
 		options: [
 			{id: '1', name: "Мужской"},
 			{id: '2', name: "Женский"}
-		}
+		]
 	}
 
 	getOptions.get().then (data) ->
@@ -65,6 +65,5 @@ app.controller "OptionsCtrl", ["getOptions", "findDoctor", "$scope", (getOptions
 	$scope.findAction = ->
 		data = this.find
 		findDoctor.get(data).then (response) ->
-			alert response.data
 			$scope.doctors = response.data
 ]

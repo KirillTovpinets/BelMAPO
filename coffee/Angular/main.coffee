@@ -3,6 +3,7 @@ app = angular.module 'belmapo', [], ($httpProvider) ->
 	$httpProvider.defaults.transformRequest = [ (data) ->
 		param = (obj) ->
 			query = ''
+			innerObj = []
 			for name of obj
 				value = obj[name]
 				if value instanceof Array

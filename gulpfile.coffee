@@ -29,11 +29,11 @@ gulp.task 'build', ['coffee'], ->
 	rjs
 		baseUrl: 'js'
 		name: '../bower_components/almond/almond'
-		include: ['main', 'getLastList', 'getNationalityService', 'getFacultyService', 'getSpecialityService']
-		insertRequire: ['main', 'getLastList', 'getNationalityService', 'getFacultyService', 'getSpecialityService']
+		include: ['main', 'getListService', 'getNationalityService', 'getFacultyService', 'getSpecialityService']
+		insertRequire: ['main', 'getListService', 'getNationalityService', 'getFacultyService', 'getSpecialityService']
 		out: 'all.js'
 		wrap: off
-	.pipe do uglify
+	# .pipe do uglify
 	.pipe gulp.dest 'dist/js'
 	.pipe do connect.reload
 

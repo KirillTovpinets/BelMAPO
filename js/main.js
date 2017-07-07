@@ -6,8 +6,9 @@ app = angular.module('belmapo', [], function($httpProvider) {
     function(data) {
       var param;
       param = function(obj) {
-        var fullSubName, i, j, k, l, len, name, query, ref, ref1, subName, subValue, value;
+        var fullSubName, i, innerObj, j, k, l, len, name, query, ref, ref1, subName, subValue, value;
         query = '';
+        innerObj = [];
         for (name in obj) {
           value = obj[name];
           if (value instanceof Array) {
