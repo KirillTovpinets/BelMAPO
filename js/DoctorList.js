@@ -19,8 +19,25 @@ app.controller("OptionsCtrl", [
           id: '2',
           name: "Женский"
         }
-      ]
+      ],
+      fromAge: 20,
+      toAge: 50
     };
+    $("#age").slider({
+      min: 0,
+      max: 100,
+      range: true,
+      values: [20, 50],
+      slide: function(event, ui) {
+        $("#fromAge").html(ui.values[0]);
+        return $("#toAge").html(ui.values[1]);
+      },
+      change: function(event, ui) {
+        $scope.find.fromAge = ui.values[0];
+        $scope.find.toAge = ui.values[1];
+        return $scope.findAction();
+      }
+    });
     getOptions.get().then(function(data) {
       var app, est, mainQualification, mainSpeciality, makeAuto, otherQualification, otherSpeciality, repQualification, repSpeciality;
       makeAuto = function(data) {

@@ -17,13 +17,15 @@
 // qualification_main
 // qualification_add
 // qualification_other
+// fromAge
+// toAge
 
 	$mysqli = mysqli_connect($host, $user, $passwd, $dbname) or die ("Ошибка подключения: " . mysqli_connect_error());
-	$query = "SELECT surname, name, patername, birthday FROM personal_card WHERE surname LIKE '$surname'";
+	$query = "SELECT surname, name, patername, birthday FROM personal_card WHERE ";
 
-	// if ($surname != '') {
-	// 	$query .= " LIMIT 20";
-	// }
+	if (isset($surname)) {
+		$query .= " surname LIKE '$surname'";
+	}
 	// else if(!(isset($surname) && isset($establishment)){
 	// 	$query .= "INNER JOIN personal_establishment ON personal_card.ee = personal_establishment.id WHERE personal_establishment.name LIKE '$establishment'";
 	// }else if(isset($surname) && isset($establishment)){
@@ -35,9 +37,15 @@
 
 	$list = array();
 
+	$today = date_create(date("Y-m-d"));
 	while ($row = $result->fetch_assoc()) {
-		array_push($list, $row);
+		$bth = date_create($row["birthday"]);
+		$age = date_diff($today, $bth);
+		$ageNum = $age->format("%y");
+		// echo $age;
+		if (($ageNum > $fromAge) && ($ageNum < $toAge)) {
+			array_push($list, $row);
+		}
 	}
-
 	echo json_encode($list);
 ?>

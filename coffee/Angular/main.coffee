@@ -71,12 +71,3 @@ app.controller "FacultyCtrl", ['getFacultyService', '$scope', (getFacultyService
 		FactultyChart = new CanvasJS.Chart "FacultyChart", FacultyConfig
 		FactultyChart.render()
 ]
-$("#age").slider(
-	min: 0
-	max: 100
-	range: true
-	values: [20, 50]
-	slide: (event, ui) ->
-		$("#fromAge").html ui.values[0]
-		$("#toAge").html ui.values[1]
-)

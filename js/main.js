@@ -117,14 +117,3 @@ app.controller("FacultyCtrl", [
     });
   }
 ]);
-
-$("#age").slider({
-  min: 0,
-  max: 100,
-  range: true,
-  values: [20, 50],
-  slide: function(event, ui) {
-    $("#fromAge").html(ui.values[0]);
-    return $("#toAge").html(ui.values[1]);
-  }
-});

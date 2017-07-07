@@ -23,7 +23,7 @@ block content
 									.col-md-12
 										.form-group.no-margin
 											label Возраст: от 
-												span#fromAge 20 
+												span#fromAge(ng-model="find.fromAge" ng-change="findAction()") 20 
 												|      до 
 												span#toAge 50
 											#age

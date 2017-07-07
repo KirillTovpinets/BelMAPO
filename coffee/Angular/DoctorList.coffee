@@ -11,8 +11,24 @@ app.controller "OptionsCtrl", ["getOptions", "findDoctor", "$scope", (getOptions
 			{id: '1', name: "Мужской"},
 			{id: '2', name: "Женский"}
 		]
+		fromAge: 20
+		toAge: 50
 	}
-
+	$("#age").slider(
+		min: 0
+		max: 100
+		range: true
+		values: [20, 50]
+		slide: (event, ui) ->
+			$("#fromAge").html ui.values[0]
+			$("#toAge").html ui.values[1]
+		change: (event, ui) ->
+			# $("#fromAgeHidden").val(ui.values[0])
+			# $("#toAgeHidden").val(ui.values[1])
+			$scope.find.fromAge = ui.values[0]
+			$scope.find.toAge = ui.values[1]
+			do $scope.findAction
+	)
 	getOptions.get().then (data) ->
 		makeAuto = (data) ->
 			auto = []
