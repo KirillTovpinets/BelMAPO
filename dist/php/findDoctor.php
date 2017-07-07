@@ -7,6 +7,30 @@
 	}
 
 	extract(array_map('cleanFields', $_POST));
+
+	$tables = [
+		"establishment" => "personal_establishment",
+		"appointment" => "personal_appointment",
+		"speciality_main" => "personal_speciality(main)",
+		"speciality_rep" => "personal_speciality(reprep)",
+		"speciality_other" => "personal_speciality(other)",
+		"qualification_main" => "personal_qualification(main)",
+		"qualification_add" => "personal_qualification(additional)",
+		"qualification_other" => "personal_qualification(other)"
+	];
+
+	$fields = [
+		"establishment" => "ee",
+		"appointment" => "appointment",
+		"speciality_main" => "speciality_main",
+		"speciality_rep" => "speciality_rep",
+		"speciality_other" => "speciality_other",
+		"qualification_main" => "qualification_main",
+		"qualification_add" => "qualification_add",
+		"qualification_other" => "qualification_other"
+	];
+
+	
 // gender
 // surname
 // establishment
@@ -20,18 +44,35 @@
 // fromAge
 // toAge
 
-	$mysqli = mysqli_connect($host, $user, $passwd, $dbname) or die ("Ошибка подключения: " . mysqli_connect_error());
-	$query = "SELECT surname, name, patername, birthday FROM personal_card WHERE ";
-
-	if (isset($surname)) {
-		$query .= " surname LIKE '$surname'";
+	$query = "SELECT personal_card.surname, personal_card.name, personal_card.patername, personal_card.birthday FROM personal_card ";
+	$lastPart = array();
+	$hasKey = false;
+	foreach ($tables as $key => $value) {
+		if (isset($_POST[$key])) {
+			$postValue = $_POST[$key];
+			$hasKey = true;
+			$query .= "INNER JOIN " . $value . " ON personal_card." . $fields[$key] . " = " . $value . ".id ";
+			$lastPartItem = $value . ".name LIKE '" . $postValue . "'";
+			array_push($lastPart, $lastPartItem); 
+		}
 	}
-	// else if(!(isset($surname) && isset($establishment)){
-	// 	$query .= "INNER JOIN personal_establishment ON personal_card.ee = personal_establishment.id WHERE personal_establishment.name LIKE '$establishment'";
-	// }else if(isset($surname) && isset($establishment)){
-	// 	$query .= "INNER JOIN personal_establishment ON personal_card.ee = personal_establishment.id WHERE personal_establishment.name LIKE '$establishment' AND personal_card.surname LIKE '$surname'";
-	// }
-	
+
+	if ($hasKey || isset($surname)) {
+		$query .= "WHERE ";
+	}
+
+	if(isset($surname)){
+		$query .= " personal_card.surname LIKE '$surname' ";
+	}
+	if (!empty($lastPart)) {
+		$lastPartString = implode(" AND ", $lastPart);
+
+		$query .= " AND ";
+		$query .= $lastPartString;
+	}
+
+	$mysqli = mysqli_connect($host, $user, $passwd, $dbname) or die ("Ошибка подключения: " . mysqli_connect_error());
+	$query .= " LIMIT 30";
 	$result = $mysqli->query($query) or die ("Ошибка запроса: " . mysqli_error($mysqli));
 	mysqli_close($mysqli);
 

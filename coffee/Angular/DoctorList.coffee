@@ -48,38 +48,73 @@ app.controller "OptionsCtrl", ["getOptions", "findDoctor", "$scope", (getOptions
 		$( "#ee" ).autocomplete {
 			source: est
 			minLength: 9
+			select: (event, ui) ->
+				$scope.find.establishment = ui.value
+				do $scope.findAction
 		}
+
+		# appointment
+		# speciality_main
+		# speciality_rep
+		# speciality_other
+		# qualification_main
+		# qualification_add
+		# qualification_other
 		$("#app").autocomplete {
 			source: app
 			minLength: 4
+			select: (event, ui) ->
+				$scope.find.appointment = ui.value
+				do $scope.findAction
 		}
 		$("#mainSp").autocomplete {
 			source: mainSpeciality
 			minLength: 3
+			select: (event, ui) ->
+				$scope.find.speciality_main = ui.value
+				do $scope.findAction
 		}
 		$("#repSp").autocomplete {
 			source: repSpeciality
 			minLength: 3
+			select: (event, ui) ->
+				$scope.find.speciality_rep = ui.value
+				do $scope.findAction
 		}
 		$("#otherSp").autocomplete {
 			source: otherSpeciality
 			minLength: 3
+			select: (event, ui) ->
+				$scope.find.speciality_other = ui.value
+				do $scope.findAction
 		}
 		$("#mainQual").autocomplete {
 			source: mainQualification
 			minLength: 3
+			select: (event, ui) ->
+				$scope.find.qualification_main = ui.value
+				do $scope.findAction
 		}
 		$("#addQual").autocomplete {
 			source: repQualification
 			minLength: 3
+			select: (event, ui) ->
+				$scope.find.qualification_add = ui.value
+				do $scope.findAction
 		}
 		$("#otherQual").autocomplete {
 			source: otherQualification
 			minLength: 3
+			select: (event, ui) ->
+				$scope.find.qualification_other = ui.value
+				do $scope.findAction
 		}
 
 	$scope.findAction = ->
 		data = this.find
+		$('#DoctorList').preloader 'start'
 		findDoctor.get(data).then (response) ->
+			# alert response.data
 			$scope.doctors = response.data
+			$('#DoctorList').preloader 'stop'
 ]

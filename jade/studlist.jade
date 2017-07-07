@@ -32,42 +32,42 @@ block content
 									.col-md-12
 										.form-group.no-margin
 											label Учебное заведение
-											input(name="establishment" ng-change="findAction()" ng-model="find.establishment").form-control#ee
+											input(name="establishment" ng-model="find.establishment").form-control#ee
 									.col-md-12
 										.form-group.no-margin
 											label Должность
-											input(name="appointment" ng-change="findAction()" ng-model="find.appointment").form-control#app
+											input(name="appointment" ng-model="find.appointment").form-control#app
 									.col-md-12
 										.form-group.no-margin
 											label врачебная Специальность
-											input(name="speciality" ng-change="findAction()" ng-model="find.speciality_main").form-control#mainSp
+											input(name="speciality" ng-model="find.speciality_main").form-control#mainSp
 									.col-md-12
 										.form-group.no-margin
 											label Специальность по переподготовке
-											input(name="speciality" ng-change="findAction()" ng-model="find.speciality_rep").form-control#repSp
+											input(name="speciality" ng-model="find.speciality_rep").form-control#repSp
 									.col-md-12
 										.form-group.no-margin
 											label Специальность (прочие)
-											input(name="speciality" ng-change="findAction()" ng-model="find.speciality_other").form-control#otherSp
+											input(name="speciality" ng-model="find.speciality_other").form-control#otherSp
 									.col-md-12
 										.form-group.no-margin
 											label Квалификация (основная)
-											input(name="qualification" ng-change="findAction()" ng-model="find.qualification_main").form-control#mainQual
+											input(name="qualification" ng-model="find.qualification_main").form-control#mainQual
 									.col-md-12
 										.form-group.no-margin
 											label Квалификация (дополнительная)
-											input(name="qualification" ng-change="findAction()" ng-model="find.qualification_add").form-control#addQual
+											input(name="qualification" ng-model="find.qualification_add").form-control#addQual
 									.col-md-12
 										.form-group.no-margin
 											label Квалификация (прочие)
-											input(name="qualification" ng-change="findAction()" ng-model="find.qualification_other").form-control#otherQual
+											input(name="qualification" ng-model="find.qualification_other").form-control#otherQual
 				.col-md-9
 					.card
 						.header
 							h4.title Результаты поиска
 							p.category Учётные карточки врачей
 						.content
-							.row
+							.row#DoctorList
 								div.col-md-4(ng-repeat="doctor in doctors")
 									div.card.card-user
 										div.image

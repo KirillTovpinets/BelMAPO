@@ -59,42 +59,76 @@ app.controller("OptionsCtrl", [
       otherQualification = makeAuto(data.data.otherQualificationList);
       $("#ee").autocomplete({
         source: est,
-        minLength: 9
+        minLength: 9,
+        select: function(event, ui) {
+          $scope.find.establishment = ui.value;
+          return $scope.findAction();
+        }
       });
       $("#app").autocomplete({
         source: app,
-        minLength: 4
+        minLength: 4,
+        select: function(event, ui) {
+          $scope.find.appointment = ui.value;
+          return $scope.findAction();
+        }
       });
       $("#mainSp").autocomplete({
         source: mainSpeciality,
-        minLength: 3
+        minLength: 3,
+        select: function(event, ui) {
+          $scope.find.speciality_main = ui.value;
+          return $scope.findAction();
+        }
       });
       $("#repSp").autocomplete({
         source: repSpeciality,
-        minLength: 3
+        minLength: 3,
+        select: function(event, ui) {
+          $scope.find.speciality_rep = ui.value;
+          return $scope.findAction();
+        }
       });
       $("#otherSp").autocomplete({
         source: otherSpeciality,
-        minLength: 3
+        minLength: 3,
+        select: function(event, ui) {
+          $scope.find.speciality_other = ui.value;
+          return $scope.findAction();
+        }
       });
       $("#mainQual").autocomplete({
         source: mainQualification,
-        minLength: 3
+        minLength: 3,
+        select: function(event, ui) {
+          $scope.find.qualification_main = ui.value;
+          return $scope.findAction();
+        }
       });
       $("#addQual").autocomplete({
         source: repQualification,
-        minLength: 3
+        minLength: 3,
+        select: function(event, ui) {
+          $scope.find.qualification_add = ui.value;
+          return $scope.findAction();
+        }
       });
       return $("#otherQual").autocomplete({
         source: otherQualification,
-        minLength: 3
+        minLength: 3,
+        select: function(event, ui) {
+          $scope.find.qualification_other = ui.value;
+          return $scope.findAction();
+        }
       });
     });
     return $scope.findAction = function() {
       var data;
       data = this.find;
+      $('#DoctorList').preloader('start');
       return findDoctor.get(data).then(function(response) {
-        return $scope.doctors = response.data;
+        $scope.doctors = response.data;
+        return $('#DoctorList').preloader('stop');
       });
     };
   }
