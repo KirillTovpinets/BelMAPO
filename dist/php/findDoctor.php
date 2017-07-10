@@ -43,8 +43,9 @@
 // qualification_other
 // fromAge
 // toAge
+// count
 
-	$query = "SELECT personal_card.surname, personal_card.name, personal_card.patername, personal_card.birthday FROM personal_card ";
+	$query = "SELECT personal_card.id, personal_card.surname, personal_card.isMale, personal_card.name, personal_card.patername, personal_card.birthday FROM personal_card ";
 	$lastPart = array();
 	$hasKey = false;
 	foreach ($tables as $key => $value) {
@@ -59,6 +60,8 @@
 
 	if ($hasKey || isset($surname)) {
 		$query .= "WHERE ";
+	}else{
+		$query .= "WHERE personal_card.isMale = '$gender'";
 	}
 
 	if(isset($surname)){
@@ -67,12 +70,21 @@
 	if (!empty($lastPart)) {
 		$lastPartString = implode(" AND ", $lastPart);
 
-		$query .= " AND ";
+		if (isset($surname)) {
+			$query .= " AND ";
+		}
 		$query .= $lastPartString;
 	}
-
 	$mysqli = mysqli_connect($host, $user, $passwd, $dbname) or die ("Ошибка подключения: " . mysqli_connect_error());
-	$query .= " LIMIT 30";
+	$query .= " ORDER BY personal_card.surname ASC";
+	if ($offset == 0) {
+		$query .= " LIMIT 6";
+	}else{
+		$query .= " LIMIT $count OFFSET $offset";
+	}
+	// echo $query;
+
+	// print_r($_POST);	
 	$result = $mysqli->query($query) or die ("Ошибка запроса: " . mysqli_error($mysqli));
 	mysqli_close($mysqli);
 
@@ -86,6 +98,8 @@
 		// echo $age;
 		if (($ageNum > $fromAge) && ($ageNum < $toAge)) {
 			array_push($list, $row);
+			// print_r($_POST);
+			// print_r($row);
 		}
 	}
 	echo json_encode($list);

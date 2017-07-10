@@ -6,14 +6,12 @@ app.controller "OptionsCtrl", ["getOptions", "findDoctor", "$scope", (getOptions
 	$scope.category = []
 	$scope.doctors = []
 	$scope.find = {
-		gender: {id: '1', name: 'Мужской'}
-		options: [
-			{id: '1', name: "Мужской"},
-			{id: '2', name: "Женский"}
-		]
 		fromAge: 20
 		toAge: 50
+		offset: 0
+		count: 6
 	}
+
 	$("#age").slider(
 		min: 0
 		max: 100
@@ -49,7 +47,7 @@ app.controller "OptionsCtrl", ["getOptions", "findDoctor", "$scope", (getOptions
 			source: est
 			minLength: 9
 			select: (event, ui) ->
-				$scope.find.establishment = ui.value
+				$scope.find.establishment = this.value
 				do $scope.findAction
 		}
 
@@ -64,57 +62,77 @@ app.controller "OptionsCtrl", ["getOptions", "findDoctor", "$scope", (getOptions
 			source: app
 			minLength: 4
 			select: (event, ui) ->
-				$scope.find.appointment = ui.value
+				$scope.find.appointment = this.value
 				do $scope.findAction
 		}
 		$("#mainSp").autocomplete {
 			source: mainSpeciality
 			minLength: 3
 			select: (event, ui) ->
-				$scope.find.speciality_main = ui.value
+				$scope.find.speciality_main = this.value
 				do $scope.findAction
 		}
 		$("#repSp").autocomplete {
 			source: repSpeciality
 			minLength: 3
 			select: (event, ui) ->
-				$scope.find.speciality_rep = ui.value
+				$scope.find.speciality_rep = this.value
 				do $scope.findAction
 		}
 		$("#otherSp").autocomplete {
 			source: otherSpeciality
 			minLength: 3
 			select: (event, ui) ->
-				$scope.find.speciality_other = ui.value
+				$scope.find.speciality_other = this.value
 				do $scope.findAction
 		}
 		$("#mainQual").autocomplete {
 			source: mainQualification
 			minLength: 3
 			select: (event, ui) ->
-				$scope.find.qualification_main = ui.value
+				$scope.find.qualification_main = this.value
 				do $scope.findAction
 		}
 		$("#addQual").autocomplete {
 			source: repQualification
 			minLength: 3
 			select: (event, ui) ->
-				$scope.find.qualification_add = ui.value
+				$scope.find.qualification_add = this.value
 				do $scope.findAction
 		}
 		$("#otherQual").autocomplete {
 			source: otherQualification
 			minLength: 3
 			select: (event, ui) ->
-				$scope.find.qualification_other = ui.value
+				$scope.find.qualification_other = this.value
 				do $scope.findAction
 		}
-
+	scrollCounter = -400
 	$scope.findAction = ->
 		data = this.find
 		$('#DoctorList').preloader 'start'
+		$scope.find.offset = 0
+		$scope.find.count = 6
+		scrollCounter = -400
 		findDoctor.get(data).then (response) ->
+			# alert response.data.length
 			# alert response.data
 			$scope.doctors = response.data
 			$('#DoctorList').preloader 'stop'
+	$scope.getDoctorLink = (id) ->
+		return "doctorInfo.html?id=" + id
+
+	$(".main-panel").scroll ->
+		scrollOffsetTop = $(".main-panel").children().first().offset().top
+		if scrollOffsetTop < scrollCounter
+		  scrollCounter -= 400
+		  $scope.find.offset += $scope.doctors.length
+		  data = $scope.find
+		  findDoctor.get(data).then (response) ->
+		  	# alert response.data
+		  	for obj in response.data
+		  		$scope.doctors.push obj
+		  	# alert response.data.length
+		  	$scope.find.offset += response.data.length
+		  
 ]

@@ -1,5 +1,6 @@
 app.controller("OptionsCtrl", [
   "getOptions", "findDoctor", "$scope", function(getOptions, findDoctor, $scope) {
+    var scrollCounter;
     $scope.establishment = [];
     $scope.appointment = [];
     $scope.speciality = [];
@@ -7,21 +8,10 @@ app.controller("OptionsCtrl", [
     $scope.category = [];
     $scope.doctors = [];
     $scope.find = {
-      gender: {
-        id: '1',
-        name: 'Мужской'
-      },
-      options: [
-        {
-          id: '1',
-          name: "Мужской"
-        }, {
-          id: '2',
-          name: "Женский"
-        }
-      ],
       fromAge: 20,
-      toAge: 50
+      toAge: 50,
+      offset: 0,
+      count: 6
     };
     $("#age").slider({
       min: 0,
@@ -61,7 +51,7 @@ app.controller("OptionsCtrl", [
         source: est,
         minLength: 9,
         select: function(event, ui) {
-          $scope.find.establishment = ui.value;
+          $scope.find.establishment = this.value;
           return $scope.findAction();
         }
       });
@@ -69,7 +59,7 @@ app.controller("OptionsCtrl", [
         source: app,
         minLength: 4,
         select: function(event, ui) {
-          $scope.find.appointment = ui.value;
+          $scope.find.appointment = this.value;
           return $scope.findAction();
         }
       });
@@ -77,7 +67,7 @@ app.controller("OptionsCtrl", [
         source: mainSpeciality,
         minLength: 3,
         select: function(event, ui) {
-          $scope.find.speciality_main = ui.value;
+          $scope.find.speciality_main = this.value;
           return $scope.findAction();
         }
       });
@@ -85,7 +75,7 @@ app.controller("OptionsCtrl", [
         source: repSpeciality,
         minLength: 3,
         select: function(event, ui) {
-          $scope.find.speciality_rep = ui.value;
+          $scope.find.speciality_rep = this.value;
           return $scope.findAction();
         }
       });
@@ -93,7 +83,7 @@ app.controller("OptionsCtrl", [
         source: otherSpeciality,
         minLength: 3,
         select: function(event, ui) {
-          $scope.find.speciality_other = ui.value;
+          $scope.find.speciality_other = this.value;
           return $scope.findAction();
         }
       });
@@ -101,7 +91,7 @@ app.controller("OptionsCtrl", [
         source: mainQualification,
         minLength: 3,
         select: function(event, ui) {
-          $scope.find.qualification_main = ui.value;
+          $scope.find.qualification_main = this.value;
           return $scope.findAction();
         }
       });
@@ -109,7 +99,7 @@ app.controller("OptionsCtrl", [
         source: repQualification,
         minLength: 3,
         select: function(event, ui) {
-          $scope.find.qualification_add = ui.value;
+          $scope.find.qualification_add = this.value;
           return $scope.findAction();
         }
       });
@@ -117,19 +107,44 @@ app.controller("OptionsCtrl", [
         source: otherQualification,
         minLength: 3,
         select: function(event, ui) {
-          $scope.find.qualification_other = ui.value;
+          $scope.find.qualification_other = this.value;
           return $scope.findAction();
         }
       });
     });
-    return $scope.findAction = function() {
+    scrollCounter = -400;
+    $scope.findAction = function() {
       var data;
       data = this.find;
       $('#DoctorList').preloader('start');
+      $scope.find.offset = 0;
+      $scope.find.count = 6;
+      scrollCounter = -400;
       return findDoctor.get(data).then(function(response) {
         $scope.doctors = response.data;
         return $('#DoctorList').preloader('stop');
       });
     };
+    $scope.getDoctorLink = function(id) {
+      return "doctorInfo.html?id=" + id;
+    };
+    return $(".main-panel").scroll(function() {
+      var data, scrollOffsetTop;
+      scrollOffsetTop = $(".main-panel").children().first().offset().top;
+      if (scrollOffsetTop < scrollCounter) {
+        scrollCounter -= 400;
+        $scope.find.offset += $scope.doctors.length;
+        data = $scope.find;
+        return findDoctor.get(data).then(function(response) {
+          var i, len, obj, ref;
+          ref = response.data;
+          for (i = 0, len = ref.length; i < len; i++) {
+            obj = ref[i];
+            $scope.doctors.push(obj);
+          }
+          return $scope.find.offset += response.data.length;
+        });
+      }
+    });
   }
 ]);

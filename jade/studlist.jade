@@ -18,8 +18,9 @@ block content
 									.col-md-12
 										.form-group.no-margin
 											label Пол
-											select.form-control(name="gender" ng-model="find.gender" ng-change="findAction()" ng-options="option.name for option in find.options track by option.id")
-												
+											select.form-control(name="gender" ng-model="find.gender" ng-change="findAction()" )
+												option(value="1" selected="selected") Мужской
+												option(value="0") Женский
 									.col-md-12
 										.form-group.no-margin
 											label Возраст: от 
@@ -32,35 +33,35 @@ block content
 									.col-md-12
 										.form-group.no-margin
 											label Учебное заведение
-											input(name="establishment" ng-model="find.establishment").form-control#ee
+											input(name="establishment" value="{{ find.establishment }}" ng-model="find.establishment").form-control#ee
 									.col-md-12
 										.form-group.no-margin
 											label Должность
-											input(name="appointment" ng-model="find.appointment").form-control#app
+											input(name="appointment" value="{{ find.appointment }}" ng-model="find.appointment").form-control#app
 									.col-md-12
 										.form-group.no-margin
 											label врачебная Специальность
-											input(name="speciality" ng-model="find.speciality_main").form-control#mainSp
+											input(name="speciality" value="{{ find.speciality_main }}" ng-model="find.speciality_main").form-control#mainSp
 									.col-md-12
 										.form-group.no-margin
 											label Специальность по переподготовке
-											input(name="speciality" ng-model="find.speciality_rep").form-control#repSp
+											input(name="speciality" value="{{ find.speciality_rep }}" ng-model="find.speciality_rep").form-control#repSp
 									.col-md-12
 										.form-group.no-margin
 											label Специальность (прочие)
-											input(name="speciality" ng-model="find.speciality_other").form-control#otherSp
+											input(name="speciality" value="{{ find.speciality_other }}" ng-model="find.speciality_other").form-control#otherSp
 									.col-md-12
 										.form-group.no-margin
 											label Квалификация (основная)
-											input(name="qualification" ng-model="find.qualification_main").form-control#mainQual
+											input(name="qualification" value="{{ find.qualification_main }}" ng-model="find.qualification_main").form-control#mainQual
 									.col-md-12
 										.form-group.no-margin
 											label Квалификация (дополнительная)
-											input(name="qualification" ng-model="find.qualification_add").form-control#addQual
+											input(name="qualification" value="{{ find.qualification_add }}" ng-model="find.qualification_add").form-control#addQual
 									.col-md-12
 										.form-group.no-margin
 											label Квалификация (прочие)
-											input(name="qualification" ng-model="find.qualification_other").form-control#otherQual
+											input(name="qualification" value="{{ find.qualification_other }}" ng-model="find.qualification_other").form-control#otherQual
 				.col-md-9
 					.card
 						.header
@@ -83,4 +84,5 @@ block content
 											|Your chick she so thirsty br
 											|I'm in that two seat Lambo
 										div.text-center
-											button.btn.btn-info.form-control Просмотр
+											a(data-fancybox data-type="iframe" data-src="{{ getDoctorLink(doctor.id) }}" href="javascript:;").btn.btn-info.form-control Просмотр
+				a(data-fancybox data-type="iframe" data-src="https://mozilla.github.io/pdf.js/web/viewer.html" href="javascript:;") Sample PDF file
