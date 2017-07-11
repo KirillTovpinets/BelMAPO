@@ -29,7 +29,7 @@ app.controller("OptionsCtrl", [
       }
     });
     getOptions.get().then(function(data) {
-      var app, est, mainQualification, mainSpeciality, makeAuto, otherQualification, otherSpeciality, repQualification, repSpeciality;
+      var app, est, mainQualification, mainSpeciality, makeAuto;
       makeAuto = function(data) {
         var auto, i, len, value;
         auto = [];
@@ -41,12 +41,8 @@ app.controller("OptionsCtrl", [
       };
       est = makeAuto(data.data.estList);
       app = makeAuto(data.data.appList);
-      mainSpeciality = makeAuto(data.data.mainSpecialityList);
-      repSpeciality = makeAuto(data.data.repSpecialityList);
-      otherSpeciality = makeAuto(data.data.otherSpecialityList);
-      mainQualification = makeAuto(data.data.mainQualificationList);
-      repQualification = makeAuto(data.data.repQualificationList);
-      otherQualification = makeAuto(data.data.otherQualificationList);
+      mainSpeciality = makeAuto(data.data.SpecialityList);
+      mainQualification = makeAuto(data.data.QualificationList);
       $("#ee").autocomplete({
         source: est,
         minLength: 9,
@@ -63,51 +59,19 @@ app.controller("OptionsCtrl", [
           return $scope.findAction();
         }
       });
-      $("#mainSp").autocomplete({
+      $("#Speciality").autocomplete({
         source: mainSpeciality,
-        minLength: 3,
-        select: function(event, ui) {
-          $scope.find.speciality_main = this.value;
-          return $scope.findAction();
-        }
-      });
-      $("#repSp").autocomplete({
-        source: repSpeciality,
         minLength: 3,
         select: function(event, ui) {
           $scope.find.speciality_rep = this.value;
           return $scope.findAction();
         }
       });
-      $("#otherSp").autocomplete({
-        source: otherSpeciality,
-        minLength: 3,
-        select: function(event, ui) {
-          $scope.find.speciality_other = this.value;
-          return $scope.findAction();
-        }
-      });
-      $("#mainQual").autocomplete({
+      return $("#Qualification").autocomplete({
         source: mainQualification,
         minLength: 3,
         select: function(event, ui) {
-          $scope.find.qualification_main = this.value;
-          return $scope.findAction();
-        }
-      });
-      $("#addQual").autocomplete({
-        source: repQualification,
-        minLength: 3,
-        select: function(event, ui) {
-          $scope.find.qualification_add = this.value;
-          return $scope.findAction();
-        }
-      });
-      return $("#otherQual").autocomplete({
-        source: otherQualification,
-        minLength: 3,
-        select: function(event, ui) {
-          $scope.find.qualification_other = this.value;
+          $scope.find.speciality_other = this.value;
           return $scope.findAction();
         }
       });

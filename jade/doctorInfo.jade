@@ -16,42 +16,97 @@ head
 	script(src="js/jquery-1.11.3.min.js")
 	script(src="js/bootstrap.min.js")
 	script(src="js/bootstrap-checkbox-radio-switch.js")
-
-	<div class="col-md-12">
-	.card
-		.header
-			h4.title Профиль врача
-			.content
-				form
-					.row
-						.col-md-12
-							.form-group
-								labelCompany
-								input(type="text" disabled="" placeholder="Company" value="Creative Code Inc.").form-control
-					.row
-						.col-md-12
-							.form-group
-								labelCompany
-								input(type="text" disabled="" placeholder="Company" value="Creative Code Inc.").form-control
-					.row
-						.col-md-12
-							.form-group
-								labelCompany
-								input(type="text" disabled="" placeholder="Company" value="Creative Code Inc.").form-control
-					.row
-						.col-md-12
-							.form-group
-								labelCompany
-								input(type="text" disabled="" placeholder="Company" value="Creative Code Inc.").form-control
-					.row
-						.col-md-12
-							.form-group
-								labelCompany
-								input(type="text" disabled="" placeholder="Company" value="Creative Code Inc.").form-control
-					.row
-						.col-md-12
-							.form-group
-								labelCompany
-								input(type="text" disabled="" placeholder="Company" value="Creative Code Inc.").form-control
-					button(type="submit").btn.btn-info.btn-fill.pull-right Update Profile
-					.clearfix
+body(ng-app="personalInfoApp")
+	.modalInfo
+		.content
+		.card
+			.header
+				h4.title Профиль врача
+				.content(ng-controller="personalInfoCtrl")
+					form
+						.row
+							.col-md-4
+								.form-group
+									label Фамилия
+									input(type="text" value="{{ doctor.surname }}").form-control
+							.col-md-4
+								.form-group
+									label Имя
+									input(type="text" value="{{ doctor.name }}").form-control
+							.col-md-4
+								.form-group
+									label Отчество
+									input(type="text" value="{{ doctor.patername }}").form-control
+						.row
+							.col-md-2
+								.form-group
+									label Дата рождения
+									input(type="text" value="{{ doctor.birthday }}").form-control
+							.col-md-5
+								.form-group
+									label Учреждение образования
+									input(type="text" value="{{ doctor.EstName }}").form-control
+							.col-md-2
+								.form-group
+									label Гражданство
+									input(type="text" value="{{ doctor.ResName }}").form-control
+							.col-md-3
+								.form-group
+									label Дата получения диплома
+									input(type="text" value="{{ doctor.diploma_start }}").form-control
+						.row
+							.col-md-4
+								.form-group
+									label Должность
+									input(type="text" value="{{ doctor.AppName }}").form-control
+							.col-md-4
+								.form-group
+									label Звание кандидата медицинских наук
+									input(type="text" value="{{ doctor.isDoctor }}").form-control
+							.col-md-4
+								.form-group
+									label Контактный телефон
+									input(type="text" value="{{ doctor.tel_number }}").form-control
+						.row
+							.col-md-6
+								.form-group
+									label Организация
+									input(type="text" value="{{ doctor.OrgName }}").form-control
+							.col-md-3
+								.form-group
+									label Область
+									input(type="text" value="{{ doctor.RegName }}").form-control
+							.col-md-3
+								.form-group
+									label Опыт работы
+									input(type="text" value="{{ doctor.experience_general + " + " + doctor.experiance_special }}").form-control
+						.row
+							.col-md-3
+								.form-group
+									label Страховой номер
+									input(type="text" value="{{ doctor.insurance_number }}").form-control
+							.col-md-3
+								.form-group
+									label Отдел
+									input(type="text" value="{{ doctor.DepName }}").form-control
+							.col-md-3
+								.form-group
+									label Факультет
+									input(type="text" value="{{ doctor.FacName }}").form-control
+							.col-md-3
+								.form-group
+									label Номер диплома
+									input(type="text" value="{{ doctor.diploma_number }}").form-control
+						button.btn.btn-danger.btn-fill.pull-right.button-group Отмена
+						button(type="submit").btn.btn-success.btn-fill.pull-right.button-group Обновить
+						.clearfix
+	script(src="js/angular.js")
+	script(src="node_modules/@fancyapps/fancybox/dist/jquery.fancybox.min.js")
+	script(src="js/angular-locale_ru-ru.js")
+	script(src="js/bootstrap-notify.js")
+	script(src="js/light-bootstrap-dashboard.js")
+	script(src="js/demo.js")
+	script(src="https://canvasjs.com/assets/script/canvasjs.min.js")
+	script(src="js/jquery-ui.min.js")
+	script(src="js/ui.js")
+	script(src="js/personalInfo.js")

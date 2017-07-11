@@ -17,12 +17,8 @@
 	$response = array();
 	$response["estList"] = getOptions("SELECT name FROM `personal_establishment`", $mysqli);
 	$response["appList"] = getOptions("SELECT name FROM `personal_appointment`", $mysqli);
-	$response["mainSpecialityList"] = getOptions("SELECT name FROM `personal_speciality(main)`", $mysqli);
-	$response["repSpecialityList"] = getOptions("SELECT name FROM `personal_speciality(reprep)`", $mysqli);
-	$response["otherSpecialityList"] = getOptions("SELECT name FROM `personal_speciality(other)`", $mysqli);
-	$response["mainQualificationList"] = getOptions("SELECT name FROM `personal_qualification(main)`", $mysqli);
-	$response["repQualificationList"] = getOptions("SELECT name FROM `personal_qualification(additional)`", $mysqli);
-	$response["otherQualificationList"] = getOptions("SELECT name FROM `personal_qualification(other)`", $mysqli);
+	$response["SpecialityList"] = getOptions("SELECT name FROM `personal_speciality_list`", $mysqli);
+	$response["QualificationList"] = getOptions("SELECT name FROM `personal_qualifications_list`", $mysqli);
 
 	echo json_encode($response);
 	

@@ -52,6 +52,18 @@ gulp.task 'buildDoctorList', ['coffeeDoctorList'], ->
 	.pipe gulp.dest 'dist/js'
 	.pipe do connect.reload
 
+gulp.task 'buildPersonalInfo', ['coffeePersonalInfo'], ->
+	rjs
+		baseUrl: 'js'
+		name: '../bower_components/almond/almond'
+		include: ['personalInfo', 'getPersonalInfo']
+		insertRequire: ['personalInfo', 'getPersonalInfo']
+		out: 'personalInfo.js'
+		wrap: off
+	# .pipe do uglify
+	.pipe gulp.dest 'dist/js'
+	.pipe do connect.reload
+
 
 gulp.task 'coffee', ->
 	gulp.src ['coffee/Angular/main.coffee', 'coffee/services/*.coffee']
@@ -63,17 +75,17 @@ gulp.task 'coffeeDoctorList', ->
 	.pipe(coffee({bare:true}))
 	.pipe gulp.dest 'js'
 
+gulp.task 'coffeePersonalInfo', ->
+	gulp.src ['coffee/Angular/personalInfo.coffee', 'coffee/services/doctors/getPersonalInfo.coffee']
+	.pipe(coffee({bare:true}))
+	.pipe gulp.dest 'js'
+
 gulp.task 'LoginCoffee', ->
 	gulp.src 'coffee/Angular/login.coffee'
 	.pipe do coffee
 	.pipe gulp.dest 'dist/js'
 	.pipe do connect.reload
 
-# gulp.task 'ServiceCoffee', ->
-# 	gulp.src 'coffee/services/*.coffee'
-# 	.pipe do coffee
-# 	.pipe gulp.dest 'dist/js/Angular/services'
-# 	.pipe do connect.reload
 
 gulp.task 'connect', ->
 	connect.server
@@ -85,8 +97,8 @@ gulp.task 'watch', ->
 	gulp.watch 'jade/*.jade', ['jade']
 	gulp.watch 'stylus/*.styl', ['stylus']
 	gulp.watch 'coffee/*.coffee', ['build']
-	gulp.watch 'coffee/Angular/*.coffee', ['build', 'buildDoctorList']
+	gulp.watch 'coffee/Angular/*.coffee', ['build', 'buildDoctorList', 'buildPersonalInfo']
 	gulp.watch 'coffee/services/*.coffee', ['build']
-	gulp.watch 'coffee/services/doctors/*.coffee', ['buildDoctorList']
+	gulp.watch 'coffee/services/doctors/*.coffee', ['buildDoctorList', 'buildPersonalInfo']
 
-gulp.task 'default', ['jade', 'stylus', 'LoginCoffee', 'connect', 'build', 'buildDoctorList', 'watch']
+gulp.task 'default', ['jade', 'stylus', 'LoginCoffee', 'connect', 'build', 'buildDoctorList', 'buildPersonalInfo', 'watch']

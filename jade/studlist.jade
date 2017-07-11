@@ -40,28 +40,12 @@ block content
 											input(name="appointment" value="{{ find.appointment }}" ng-model="find.appointment").form-control#app
 									.col-md-12
 										.form-group.no-margin
-											label врачебная Специальность
-											input(name="speciality" value="{{ find.speciality_main }}" ng-model="find.speciality_main").form-control#mainSp
+											label Специальность
+											input(name="speciality" value="{{ find.speciality }}" ng-model="find.speciality_main").form-control#Speciality
 									.col-md-12
 										.form-group.no-margin
-											label Специальность по переподготовке
-											input(name="speciality" value="{{ find.speciality_rep }}" ng-model="find.speciality_rep").form-control#repSp
-									.col-md-12
-										.form-group.no-margin
-											label Специальность (прочие)
-											input(name="speciality" value="{{ find.speciality_other }}" ng-model="find.speciality_other").form-control#otherSp
-									.col-md-12
-										.form-group.no-margin
-											label Квалификация (основная)
-											input(name="qualification" value="{{ find.qualification_main }}" ng-model="find.qualification_main").form-control#mainQual
-									.col-md-12
-										.form-group.no-margin
-											label Квалификация (дополнительная)
-											input(name="qualification" value="{{ find.qualification_add }}" ng-model="find.qualification_add").form-control#addQual
-									.col-md-12
-										.form-group.no-margin
-											label Квалификация (прочие)
-											input(name="qualification" value="{{ find.qualification_other }}" ng-model="find.qualification_other").form-control#otherQual
+											label Квалификация
+											input(name="qualification" value="{{ find.qualification }}" ng-model="find.qualification_main").form-control#Qualification
 				.col-md-9
 					.card
 						.header
@@ -85,4 +69,3 @@ block content
 											|I'm in that two seat Lambo
 										div.text-center
 											a(data-fancybox data-type="iframe" data-src="{{ getDoctorLink(doctor.id) }}" href="javascript:;").btn.btn-info.form-control Просмотр
-				a(data-fancybox data-type="iframe" data-src="https://mozilla.github.io/pdf.js/web/viewer.html" href="javascript:;") Sample PDF file
