@@ -28,7 +28,6 @@ app.controller "OptionsCtrl", ["getOptions", "findDoctor", "$scope", (getOptions
 			do $scope.findAction
 	)
 	getOptions.get().then (data) ->
-		# alert data.data
 		makeAuto = (data) ->
 			auto = []
 			for value in data
@@ -82,10 +81,8 @@ app.controller "OptionsCtrl", ["getOptions", "findDoctor", "$scope", (getOptions
 		$('#DoctorList').preloader 'start'
 		$scope.find.offset = 0
 		$scope.find.count = 6
-		scrollCounter = -400
+		scrollCounter = -200
 		findDoctor.get(data).then (response) ->
-			# alert response.data.length
-			# alert response.data
 			$scope.doctors = response.data
 			$('#DoctorList').preloader 'stop'
 	$scope.getDoctorLink = (id) ->
@@ -94,14 +91,11 @@ app.controller "OptionsCtrl", ["getOptions", "findDoctor", "$scope", (getOptions
 	$(".main-panel").scroll ->
 		scrollOffsetTop = $(".main-panel").children().first().offset().top
 		if scrollOffsetTop < scrollCounter
-		  scrollCounter -= 400
-		  $scope.find.offset += $scope.doctors.length
-		  data = $scope.find
-		  findDoctor.get(data).then (response) ->
-		  	# alert response.data
-		  	for obj in response.data
-		  		$scope.doctors.push obj
-		  	# alert response.data.length
-		  	$scope.find.offset += response.data.length
-		  
+			scrollCounter -= 200
+			$scope.find.offset += $scope.doctors.length
+			data = $scope.find
+			findDoctor.get(data).then (response) ->
+				for obj in response.data
+					$scope.doctors.push obj
+				$scope.find.offset += response.data.length
 ]

@@ -45,7 +45,7 @@
 // toAge
 // count
 
-	$query = "SELECT personal_card.id, personal_card.surname, personal_card.isMale, personal_card.name, personal_card.patername, personal_card.birthday FROM personal_card ";
+	$query = "SELECT personal_card.id, personal_card.surname, personal_card.isMale, personal_card.name, personal_card.isDoctor, personal_card.patername, personal_card.birthday FROM personal_card ";
 	$lastPart = array();
 	$hasKey = false;
 	foreach ($tables as $key => $value) {
@@ -76,7 +76,9 @@
 		$query .= $lastPartString;
 	}
 	$mysqli = mysqli_connect($host, $user, $passwd, $dbname) or die ("Ошибка подключения: " . mysqli_connect_error());
-	$query .= " ORDER BY personal_card.surname ASC";
+	if (!(isset($surname))) {
+		$query .= " ORDER BY personal_card.surname ASC";
+	}
 	if ($offset == 0) {
 		$query .= " LIMIT 6";
 	}else{

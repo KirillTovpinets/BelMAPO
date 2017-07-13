@@ -62,10 +62,7 @@ block content
 												a(href="#")
 													img.avatar.border-gray(src="img/faces/avatar.png" alt="...")
 													h4.title {{ doctor.surname }} {{ doctor.name }}
-													small {{ doctor.birthday }}
-											p.description.text-center 
-											|Lamborghini Mercy br
-											|Your chick she so thirsty br
-											|I'm in that two seat Lambo
+													small {{ doctor.birthday | date: "d MMMM yyyy"}}
+											p.description.text-center(ng-show="{{ doctor.isDoctor == 1}}") Кандидат медицинских наук
 										div.text-center
 											a(data-fancybox data-type="iframe" data-src="{{ getDoctorLink(doctor.id) }}" href="javascript:;").btn.btn-info.form-control Просмотр

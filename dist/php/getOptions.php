@@ -19,6 +19,11 @@
 	$response["appList"] = getOptions("SELECT name FROM `personal_appointment`", $mysqli);
 	$response["SpecialityList"] = getOptions("SELECT name FROM `personal_speciality_list`", $mysqli);
 	$response["QualificationList"] = getOptions("SELECT name FROM `personal_qualifications_list`", $mysqli);
+	$response["countryList"] = getOptions("SELECT name FROM `countries`", $mysqli);
+	$response["organizationList"] = getOptions("SELECT name FROM `personal_organizations`", $mysqli);
+	$response["regionList"] = getOptions("SELECT name FROM `regions`", $mysqli);
+	$response["departmentList"] = getOptions("SELECT name FROM `personal_department`", $mysqli);
+	$response["facultyList"] = getOptions("SELECT name FROM `personal_faculty`", $mysqli);
 
 	echo json_encode($response);
 	

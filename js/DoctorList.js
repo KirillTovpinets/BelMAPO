@@ -83,7 +83,7 @@ app.controller("OptionsCtrl", [
       $('#DoctorList').preloader('start');
       $scope.find.offset = 0;
       $scope.find.count = 6;
-      scrollCounter = -400;
+      scrollCounter = -200;
       return findDoctor.get(data).then(function(response) {
         $scope.doctors = response.data;
         return $('#DoctorList').preloader('stop');
@@ -96,7 +96,7 @@ app.controller("OptionsCtrl", [
       var data, scrollOffsetTop;
       scrollOffsetTop = $(".main-panel").children().first().offset().top;
       if (scrollOffsetTop < scrollCounter) {
-        scrollCounter -= 400;
+        scrollCounter -= 200;
         $scope.find.offset += $scope.doctors.length;
         data = $scope.find;
         return findDoctor.get(data).then(function(response) {

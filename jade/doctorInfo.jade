@@ -13,93 +13,126 @@ head
 	link(rel='stylesheet' href="css/pe-icon-7-stroke.css")
 	link(rel='stylesheet' href="node_modules/fancybox/dist/css/jquery.fancybox.css")
 	link(rel='stylesheet' href="css/jquery-ui.min.css")
+	script(src="js/jquery-ui.min.js")
 	script(src="js/jquery-1.11.3.min.js")
 	script(src="js/bootstrap.min.js")
 	script(src="js/bootstrap-checkbox-radio-switch.js")
 body(ng-app="personalInfoApp")
-	.modalInfo
-		.content
-		.card
-			.header
-				h4.title Профиль врача
-				.content(ng-controller="personalInfoCtrl")
-					form
-						.row
-							.col-md-4
-								.form-group
-									label Фамилия
-									input(type="text" value="{{ doctor.surname }}").form-control
-							.col-md-4
-								.form-group
-									label Имя
-									input(type="text" value="{{ doctor.name }}").form-control
-							.col-md-4
-								.form-group
-									label Отчество
-									input(type="text" value="{{ doctor.patername }}").form-control
-						.row
-							.col-md-2
-								.form-group
-									label Дата рождения
-									input(type="text" value="{{ doctor.birthday }}").form-control
-							.col-md-5
-								.form-group
-									label Учреждение образования
-									input(type="text" value="{{ doctor.EstName }}").form-control
-							.col-md-2
-								.form-group
-									label Гражданство
-									input(type="text" value="{{ doctor.ResName }}").form-control
-							.col-md-3
-								.form-group
-									label Дата получения диплома
-									input(type="text" value="{{ doctor.diploma_start }}").form-control
-						.row
-							.col-md-4
-								.form-group
-									label Должность
-									input(type="text" value="{{ doctor.AppName }}").form-control
-							.col-md-4
-								.form-group
-									label Звание кандидата медицинских наук
-									input(type="text" value="{{ doctor.isDoctor }}").form-control
-							.col-md-4
-								.form-group
-									label Контактный телефон
-									input(type="text" value="{{ doctor.tel_number }}").form-control
-						.row
-							.col-md-6
-								.form-group
-									label Организация
-									input(type="text" value="{{ doctor.OrgName }}").form-control
-							.col-md-3
-								.form-group
-									label Область
-									input(type="text" value="{{ doctor.RegName }}").form-control
-							.col-md-3
-								.form-group
-									label Опыт работы
-									input(type="text" value="{{ doctor.experience_general + " + " + doctor.experiance_special }}").form-control
-						.row
-							.col-md-3
-								.form-group
-									label Страховой номер
-									input(type="text" value="{{ doctor.insurance_number }}").form-control
-							.col-md-3
-								.form-group
-									label Отдел
-									input(type="text" value="{{ doctor.DepName }}").form-control
-							.col-md-3
-								.form-group
-									label Факультет
-									input(type="text" value="{{ doctor.FacName }}").form-control
-							.col-md-3
-								.form-group
-									label Номер диплома
-									input(type="text" value="{{ doctor.diploma_number }}").form-control
-						button.btn.btn-danger.btn-fill.pull-right.button-group Отмена
-						button(type="submit").btn.btn-success.btn-fill.pull-right.button-group Обновить
-						.clearfix
+	.main-panel.initial-width
+		.content.modalInfo(ng-controller="personalInfoCtrl")
+			.col-md-8
+				.card
+					.header
+						h4.title Профиль врача
+					.content
+						form
+							.row
+								label.fixed_width Фамилия
+								input(type="text" readonly="readonly" ng-model="doctor.surname" value="{{ doctor.surname }}").form-control.inline
+							hr.minimize-margin
+							.row
+								label.fixed_width Имя
+								input(type="text" readonly="readonly" ng-model="doctor.name" value="{{ doctor.name }}").form-control.inline
+							hr.minimize-margin
+							.row
+								
+								label.fixed_width Отчество
+								input(type="text" readonly="readonly" ng-model="doctor.patername" value="{{ doctor.patername }}").form-control.inline
+							hr.minimize-margin
+							.row
+								
+								label.fixed_width Дата рождения
+								input(type="text" readonly="readonly" ng-model="doctor.birthday" value="{{ doctor.birthday | date: 'd MMMM yyyy' }}").date-picker.form-control.inline
+							hr.minimize-margin
+							.row
+								
+								label.fixed_width Учреждение образования
+								input(type="text" readonly="readonly" ng-model="doctor.EstName" value="{{ doctor.EstName }}").form-control.inline#ee
+							hr.minimize-margin
+							.row
+								
+								label.fixed_width Специальность(и)
+								.specialities
+									span.speciality(ng-repeat="sp in doctor.specialities") 
+										span {{ sp.name }} 
+										button.del(ng-click="removeSP(sp.id)")
+											span.fa.fa-times
+									span.speciality
+										button.add(ng-click="addSP()")
+											span.fa.fa-plus
+							hr.minimize-margin
+							.row
+								
+								label.fixed_width Гражданство
+								input(type="text" readonly="readonly" ng-model="doctor.ResName" value="{{ doctor.ResName }}").form-control.inline#country
+							hr.minimize-margin
+							.row
+								
+								label.fixed_width Дата получения диплома
+								input(type="text" readonly="readonly" ng-model="doctor.diploma_start" value="{{ doctor.diploma_start | date: 'd MMMM yyyy' }}").date-picker.form-control.inline
+							hr.minimize-margin
+							.row
+								
+								label.fixed_width Должность
+								input(type="text" readonly="readonly" ng-model="doctor.AppName" value="{{ doctor.AppName }}").form-control.inline
+							hr.minimize-margin#app
+							.row
+								
+								label.fixed_width Контактный телефон
+								input(type="text" readonly="readonly" ng-model="doctor.tel_number" value="{{ doctor.tel_number }}").form-control.inline
+							hr.minimize-margin
+							.row
+								
+								label.fixed_width Организация
+								input(type="text" readonly="readonly" ng-model="doctor.OrgName" value="{{ doctor.OrgName }}").form-control.inline
+							hr.minimize-margin#organization
+							.row
+								
+								label.fixed_width Область
+								input(type="text" readonly="readonly" ng-model="doctor.RegName" value="{{ doctor.RegName }}").form-control.inline
+							hr.minimize-margin#region
+							.row
+								
+								label.fixed_width Опыт работы (осн + доп)
+								input(type="text" readonly="readonly" value="{{ doctor.experience_general + ' + ' + doctor.experiance_special }}").not-changeble.form-control.inline
+							hr.minimize-margin
+							.row
+								
+								label.fixed_width Страховой номер
+								input(type="text" readonly="readonly" ng-model="doctor.insurance_number" value="{{ doctor.insurance_number }}").form-control.inline
+							hr.minimize-margin
+							.row
+								
+								label.fixed_width Отдел
+								input(type="text" readonly="readonly" ng-model="doctor.DepName" value="{{ doctor.DepName }}").form-control.inline
+							hr.minimize-margin#department
+							.row
+								
+								label.fixed_width Факультет
+								input(type="text" readonly="readonly" ng-model="doctor.FacName" value="{{ doctor.FacName }}").form-control.inline
+							hr.minimize-margin#faculty
+							.row
+								
+								label.fixed_width Номер диплома
+								input(type="text" readonly="readonly" ng-model="doctor.diploma_number" value="{{ doctor.diploma_number }}").form-control.inline
+							hr.minimize-margin
+			.col-md-4
+				.card.card-user
+					.image
+						img(src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&amp;fm=jpg&amp;h=300&amp;q=75&amp;w=400" alt="...")
+					.content
+						.author
+							a(href="#")
+								img.avatar.border-gray(src="img/faces/avatar.png" alt="...")
+								h4.title {{ doctor.surname }} {{ doctor.name }}
+								small {{ doctor.birthday | date: "d MMMM yyyy"}}
+						p.description.text-center(ng-show="{{ doctor.isDoctor == 1}}") Кандидат медицинских наук 
+				.card.card-navigation
+					button(ng-click="CloseBtn()")#cansel.btn.btn-danger.btn-fill.pull-right.button-group Закрыть
+					button(ng-click="RefreshBtn(1)")#refresh.btn.btn-info.btn-fill.pull-right.button-group Обновить
+					button(ng-click="RefreshBtn(0)")#canselRefresh.btn.btn-danger.btn-fill.pull-right.button-group Отмена
+					button(ng-click="SaveBtn()")#save.btn.btn-success.btn-fill.pull-right.button-group Сохранить
+					.clearfix
 	script(src="js/angular.js")
 	script(src="node_modules/@fancyapps/fancybox/dist/jquery.fancybox.min.js")
 	script(src="js/angular-locale_ru-ru.js")
@@ -109,4 +142,4 @@ body(ng-app="personalInfoApp")
 	script(src="https://canvasjs.com/assets/script/canvasjs.min.js")
 	script(src="js/jquery-ui.min.js")
 	script(src="js/ui.js")
-	script(src="js/personalInfo.js")
+	script(src="js/Angular/personalInfo.js")

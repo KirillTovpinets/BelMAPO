@@ -433,124 +433,231 @@ var requirejs, require, define;
     };
 }());
 
-define("../bower_components/almond/almond", function(){});
+define("../../bower_components/almond/almond", function(){});
 
-app.controller("OptionsCtrl", [
-  "getOptions", "findDoctor", "$scope", function(getOptions, findDoctor, $scope) {
-    var scrollCounter;
-    $scope.establishment = [];
-    $scope.appointment = [];
-    $scope.speciality = [];
-    $scope.qualification = [];
-    $scope.category = [];
-    $scope.doctors = [];
-    $scope.find = {
-      fromAge: 20,
-      toAge: 50,
-      offset: 0,
-      count: 6
-    };
-    $("#age").slider({
-      min: 0,
-      max: 100,
-      range: true,
-      values: [20, 50],
-      slide: function(event, ui) {
-        $("#fromAge").html(ui.values[0]);
-        return $("#toAge").html(ui.values[1]);
-      },
-      change: function(event, ui) {
-        $scope.find.fromAge = ui.values[0];
-        $scope.find.toAge = ui.values[1];
-        return $scope.findAction();
+var app;
+
+app = angular.module("personalInfoApp", [], function($httpProvider) {
+  $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+  $httpProvider.defaults.transformRequest = [
+    function(data) {
+      var param;
+      param = function(obj) {
+        var fullSubName, i, innerObj, j, k, l, len, name, query, ref, ref1, subName, subValue, value;
+        query = '';
+        innerObj = [];
+        for (name in obj) {
+          value = obj[name];
+          if (value instanceof Array) {
+            for (i = j = 0, ref = value.length; 0 <= ref ? j <= ref : j >= ref; i = 0 <= ref ? ++j : --j) {
+              subValue = value[i];
+              fullSubName = name + '[' + i + ']';
+              innerObj[fullSubName] = subValue;
+              query += param(innerObj) + '&';
+            }
+          } else if (value instanceof Object) {
+            for (k = 0, len = value.length; k < len; k++) {
+              subName = value[k];
+              for (i = l = 0, ref1 = value.length; 0 <= ref1 ? l <= ref1 : l >= ref1; i = 0 <= ref1 ? ++l : --l) {
+                subValue = value[subName];
+                fullSubName = name + '[' + subName + ']';
+                innerObj[fullSubName] = subValue;
+                query += param(innerObj) + '&';
+              }
+            }
+          } else if (value !== void 0 && value !== null) {
+            query += encodeURIComponent(name) + '=' + encodeURIComponent(value) + '&';
+          }
+        }
+        if (query.length) {
+          return query.substr(0, query.length - 1);
+        } else {
+          return query;
+        }
+      };
+      if (angular.isObject(data) && String(data) !== '[object File]') {
+        return param(data);
+      } else {
+        return data;
       }
-    });
+    }
+  ];
+});
+
+app.controller("personalInfoCtrl", [
+  '$scope', 'getPersonalInfo', 'getOptions', 'saveChanges', 'removeSP', 'addSP', function($scope, getPersonalInfo, getOptions, saveChanges, removeSP, addSP) {
+    var oldInfo, personId;
+    $scope.doctor = {
+      isDoctor: false
+    };
     getOptions.get().then(function(data) {
-      var app, est, mainQualification, mainSpeciality, makeAuto;
+      var country, department, est, faculty, makeAuto, organization, region;
       makeAuto = function(data) {
-        var auto, i, len, value;
+        var auto, j, len, value;
         auto = [];
-        for (i = 0, len = data.length; i < len; i++) {
-          value = data[i];
+        for (j = 0, len = data.length; j < len; j++) {
+          value = data[j];
           auto.push(value.name);
         }
         return auto;
       };
       est = makeAuto(data.data.estList);
       app = makeAuto(data.data.appList);
-      mainSpeciality = makeAuto(data.data.SpecialityList);
-      mainQualification = makeAuto(data.data.QualificationList);
+      country = makeAuto(data.data.countryList);
+      organization = makeAuto(data.data.organizationList);
+      region = makeAuto(data.data.regionList);
+      department = makeAuto(data.data.departmentList);
+      faculty = makeAuto(data.data.facultyList);
       $("#ee").autocomplete({
         source: est,
         minLength: 9,
         select: function(event, ui) {
-          $scope.find.establishment = this.value;
-          return $scope.findAction();
+          return $scope.doctor.EstName = this.value;
         }
       });
       $("#app").autocomplete({
         source: app,
         minLength: 4,
         select: function(event, ui) {
-          $scope.find.appointment = this.value;
-          return $scope.findAction();
+          return $scope.doctor.AppName = this.value;
         }
       });
-      $("#Speciality").autocomplete({
-        source: mainSpeciality,
+      $("#country").autocomplete({
+        source: country,
         minLength: 3,
         select: function(event, ui) {
-          $scope.find.speciality_rep = this.value;
-          return $scope.findAction();
+          return $scope.doctor.ResName = this.value;
         }
       });
-      return $("#Qualification").autocomplete({
-        source: mainQualification,
+      $("#organization").autocomplete({
+        source: organization,
         minLength: 3,
         select: function(event, ui) {
-          $scope.find.speciality_other = this.value;
-          return $scope.findAction();
+          return $scope.doctor.OrgName = this.value;
+        }
+      });
+      $("#region").autocomplete({
+        source: region,
+        minLength: 3,
+        select: function(event, ui) {
+          return $scope.doctor.RegName = this.value;
+        }
+      });
+      $("#department").autocomplete({
+        source: department,
+        minLength: 3,
+        select: function(event, ui) {
+          return $scope.doctor.DepName = this.value;
+        }
+      });
+      return $("#faculty").autocomplete({
+        source: faculty,
+        minLength: 3,
+        select: function(event, ui) {
+          return $scope.doctor.FacName = this.value;
         }
       });
     });
-    scrollCounter = -400;
-    $scope.findAction = function() {
+    $(".date-picker").datepicker({
+      dateFormat: "yy-mm-dd"
+    });
+    personId = document.location.href.split("=")[1];
+    oldInfo = {};
+    getPersonalInfo.get(personId).then(function(response) {
+      $scope.doctor.id = personId;
+      $scope.doctor = response.data.general;
+      return $scope.doctor.specialities = response.data.additional;
+    });
+    $scope.removeSP = function(id) {
       var data;
-      data = this.find;
-      $('#DoctorList').preloader('start');
-      $scope.find.offset = 0;
-      $scope.find.count = 6;
-      scrollCounter = -400;
-      return findDoctor.get(data).then(function(response) {
-        $scope.doctors = response.data;
-        return $('#DoctorList').preloader('stop');
-      });
+      data = {};
+      data.idPerson = $scope.doctor.id;
+      data.idSP = id;
+      alert(data.idSP);
+      return removeSP["delete"](data).then(function() {});
     };
-    $scope.getDoctorLink = function(id) {
-      return "doctorInfo.html?id=" + id;
+    $scope.addSP = function() {
+      var idPerson;
+      idPerson = $scope.doctor.id;
+      return removeSP["delete"](idPerson).then(function() {});
     };
-    return $(".main-panel").scroll(function() {
-      var data, scrollOffsetTop;
-      scrollOffsetTop = $(".main-panel").children().first().offset().top;
-      if (scrollOffsetTop < scrollCounter) {
-        scrollCounter -= 400;
-        $scope.find.offset += $scope.doctors.length;
-        data = $scope.find;
-        return findDoctor.get(data).then(function(response) {
-          var i, len, obj, ref;
-          ref = response.data;
-          for (i = 0, len = ref.length; i < len; i++) {
-            obj = ref[i];
-            $scope.doctors.push(obj);
-          }
-          return $scope.find.offset += response.data.length;
-        });
+    $scope.RefreshBtn = function(trigger) {
+      angular.copy($scope.doctor, oldInfo);
+      if (trigger) {
+        $('input').not('.not-changeble').removeAttr("readonly");
+        $('hr').css("display", "none");
+        $('#save').css("display", "block");
+        $('#refresh').css("display", "none");
+        $('#cansel').css("display", "none");
+        return $('#canselRefresh').css("display", "block");
+      } else {
+        $('input').not('.not-changeble').attr("readonly", "readonly");
+        $('hr').css("display", "block");
+        $('#save').css("display", "none");
+        $('#refresh').css("display", "initial");
+        $('#cansel').css("display", "initial");
+        return $('#canselRefresh').css("display", "none");
       }
-    });
+    };
+    $scope.CloseBtn = function() {
+      return parent.$.fancybox.close();
+    };
+    return $scope.SaveBtn = function() {
+      var data, hasChaned, key, ref, value;
+      alert($scope.doctor.EstName);
+      data = {};
+      hasChaned = false;
+      ref = $scope.doctor;
+      for (key in ref) {
+        value = ref[key];
+        if (value !== oldInfo[key]) {
+          data[key] = value;
+          hasChaned = true;
+        }
+      }
+      if (hasChaned) {
+        data.id = personId;
+        return saveChanges.save(data).then(function(response) {
+          alert(response.data);
+          $('input').not('.not-changeble').attr("readonly", "readonly");
+          $('hr').css("display", "block");
+          $('#save').css("display", "none");
+          $('#refresh').css("display", "initial");
+          $('#cansel').css("display", "initial");
+          return $('#canselRefresh').css("display", "none");
+        });
+      } else {
+        return alert("NO changes");
+      }
+    };
   }
 ]);
 
-define("DoctorList", function(){});
+define("personalInfo", function(){});
+
+app.factory("getPersonalInfo", [
+  '$http', function($http) {
+    return {
+      get: function(id) {
+        return $http.get('php/getPersonalInfo.php?id=' + id);
+      }
+    };
+  }
+]);
+
+define("getPersonalInfo", function(){});
+
+app.factory("saveChanges", [
+  '$http', function($http) {
+    return {
+      save: function(data) {
+        return $http.post("./php/saveChanges.php", data);
+      }
+    };
+  }
+]);
+
+define("saveChanges", function(){});
 
 app.factory("getOptions", function($http) {
   return {
@@ -562,15 +669,29 @@ app.factory("getOptions", function($http) {
 
 define("getOptions", function(){});
 
-app.factory("findDoctor", function($http) {
-  return {
-    get: function(data) {
-      return $http.post("./php/findDoctor.php", data);
-    }
-  };
-});
+app.factory("removeSP", [
+  '$http', function($http) {
+    return {
+      "delete": function(data) {
+        return $http.get('php/removeSpeciality.php', data);
+      }
+    };
+  }
+]);
 
-define("findDoctor", function(){});
+define("removeSP", function(){});
+
+app.factory("addSP", [
+  '$http', function($http) {
+    return {
+      add: function(id) {
+        return $http.get('php/addSpeciality.php', id);
+      }
+    };
+  }
+]);
+
+define("addSP", function(){});
 
 
-require(["DoctorList", "getOptions", "findDoctor"]);
+require(["personalInfo", "getPersonalInfo", "saveChanges", "getOptions", "removeSP", "addSP"]);

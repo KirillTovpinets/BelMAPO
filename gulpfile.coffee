@@ -49,21 +49,19 @@ gulp.task 'buildDoctorList', ['coffeeDoctorList'], ->
 		out: 'Doctors.js'
 		wrap: off
 	# .pipe do uglify
-	.pipe gulp.dest 'dist/js'
-	.pipe do connect.reload
+	.pipe gulp.dest 'dist/js/Angular'
 
 gulp.task 'buildPersonalInfo', ['coffeePersonalInfo'], ->
 	rjs
-		baseUrl: 'js'
-		name: '../bower_components/almond/almond'
-		include: ['personalInfo', 'getPersonalInfo']
-		insertRequire: ['personalInfo', 'getPersonalInfo']
+		baseUrl: 'js/personalInfo'
+		name: '../../bower_components/almond/almond'
+		include: ['personalInfo', 'getPersonalInfo', 'saveChanges', 'getOptions','removeSP','addSP']
+		insertRequire: ['personalInfo', 'getPersonalInfo', 'saveChanges', 'getOptions','removeSP','addSP']
 		out: 'personalInfo.js'
 		wrap: off
 	# .pipe do uglify
-	.pipe gulp.dest 'dist/js'
+	.pipe gulp.dest 'dist/js/Angular'
 	.pipe do connect.reload
-
 
 gulp.task 'coffee', ->
 	gulp.src ['coffee/Angular/main.coffee', 'coffee/services/*.coffee']
@@ -76,22 +74,19 @@ gulp.task 'coffeeDoctorList', ->
 	.pipe gulp.dest 'js'
 
 gulp.task 'coffeePersonalInfo', ->
-	gulp.src ['coffee/Angular/personalInfo.coffee', 'coffee/services/doctors/getPersonalInfo.coffee']
+	gulp.src ['coffee/Angular/personalInfo.coffee', 
+				'coffee/services/doctors/getPersonalInfo.coffee', 
+				'coffee/services/doctors/saveChanges.coffee',
+				'coffee/services/doctors/getOptions.coffee',
+				'coffee/services/doctors/removeSP.coffee',
+				'coffee/services/doctors/addSP.coffee',]
 	.pipe(coffee({bare:true}))
-	.pipe gulp.dest 'js'
+	.pipe gulp.dest 'js/personalInfo'
 
 gulp.task 'LoginCoffee', ->
 	gulp.src 'coffee/Angular/login.coffee'
 	.pipe do coffee
 	.pipe gulp.dest 'dist/js'
-	.pipe do connect.reload
-
-
-gulp.task 'connect', ->
-	connect.server
-		port: 1337
-		livereload: on
-		root: './dist'
 
 gulp.task 'watch', ->
 	gulp.watch 'jade/*.jade', ['jade']
@@ -101,4 +96,4 @@ gulp.task 'watch', ->
 	gulp.watch 'coffee/services/*.coffee', ['build']
 	gulp.watch 'coffee/services/doctors/*.coffee', ['buildDoctorList', 'buildPersonalInfo']
 
-gulp.task 'default', ['jade', 'stylus', 'LoginCoffee', 'connect', 'build', 'buildDoctorList', 'buildPersonalInfo', 'watch']
+gulp.task 'default', ['jade', 'stylus', 'LoginCoffee', 'build', 'buildDoctorList', 'buildPersonalInfo', 'watch']
