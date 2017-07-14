@@ -25,7 +25,7 @@ body(ng-app="personalInfoApp")
 					.header
 						h4.title Профиль врача
 					.content
-						form
+						form#personalInfo
 							.row
 								label.fixed_width Фамилия
 								input(type="text" readonly="readonly" ng-model="doctor.surname" value="{{ doctor.surname }}").form-control.inline
@@ -55,10 +55,28 @@ body(ng-app="personalInfoApp")
 								.specialities
 									span.speciality(ng-repeat="sp in doctor.specialities") 
 										span {{ sp.name }} 
-										button.del(ng-click="removeSP(sp.id)")
-											span.fa.fa-times
-									span.speciality
-										button.add(ng-click="addSP()")
+									span#personalSp
+										input(type="text" ng-model="newSP.name").form-control.inline-add.not-changeble.group-left
+										span.speciality.group-right
+											button(ng-click="SaveNewSP()").save
+												span.fa.fa-floppy-o
+									span.speciality#addSP
+										button.add(ng-click="showSpFieldAction()")
+											span.fa.fa-plus
+							hr.minimize-margin
+							.row
+								
+								label.fixed_width Квалификация(и)
+								.specialities
+									span.speciality(ng-repeat="qu in doctor.qualifications") 
+										span {{ qu.name }} 
+									span#personalQu
+										input(type="text" ng-model="newQu.name").form-control.inline-add.not-changeble.group-left
+										span.speciality.group-right
+											button(ng-click="SaveNewQu()").save
+												span.fa.fa-floppy-o
+									span.speciality#addQu
+										button.add(ng-click="showQuFieldAction()")
 											span.fa.fa-plus
 							hr.minimize-margin
 							.row

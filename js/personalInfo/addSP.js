@@ -1,8 +1,8 @@
 app.factory("addSP", [
   '$http', function($http) {
     return {
-      add: function(id) {
-        return $http.get('php/addSpeciality.php', id);
+      add: function(data) {
+        return $http.get('php/addSpeciality.php', data);
       }
     };
   }

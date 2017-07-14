@@ -55,8 +55,8 @@ gulp.task 'buildPersonalInfo', ['coffeePersonalInfo'], ->
 	rjs
 		baseUrl: 'js/personalInfo'
 		name: '../../bower_components/almond/almond'
-		include: ['personalInfo', 'getPersonalInfo', 'saveChanges', 'getOptions','removeSP','addSP']
-		insertRequire: ['personalInfo', 'getPersonalInfo', 'saveChanges', 'getOptions','removeSP','addSP']
+		include: ['personalInfo', 'getPersonalInfo', 'saveChanges', 'getOptions','removeSP','addSP', 'addQu']
+		insertRequire: ['personalInfo', 'getPersonalInfo', 'saveChanges', 'getOptions','removeSP','addSP', 'addQu']
 		out: 'personalInfo.js'
 		wrap: off
 	# .pipe do uglify
@@ -79,7 +79,8 @@ gulp.task 'coffeePersonalInfo', ->
 				'coffee/services/doctors/saveChanges.coffee',
 				'coffee/services/doctors/getOptions.coffee',
 				'coffee/services/doctors/removeSP.coffee',
-				'coffee/services/doctors/addSP.coffee',]
+				'coffee/services/doctors/addSP.coffee',
+				'coffee/services/doctors/addQu.coffee']
 	.pipe(coffee({bare:true}))
 	.pipe gulp.dest 'js/personalInfo'
 
