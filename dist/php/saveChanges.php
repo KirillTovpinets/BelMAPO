@@ -26,21 +26,6 @@
 		"DepName" => "department",
 		"FacName" => "faculty",
 	];
-	// surname
-	// name
-	// patername
-	// birthday
-	// EstName
-	// ResName
-	// diploma_start
-	// AppName
-	// tel_number
-	// OrgName
-	// RegName
-	// insurance_number
-	// DepName
-	// FacName
-	// diploma_number
 
 	$originalFields = [
 		"surname" => "surname",
@@ -52,14 +37,6 @@
 		"insurance_number" => "insurance_number",
 		"diploma_number" => "diploma_number"
 	];
-	// surname
-	// name
-	// patername
-	// birthday
-	// diploma_start
-	// tel_number
-	// insurance_number
-	// diploma_number
 
 	$mysqli = mysqli_connect($host, $user, $passwd, $dbname) or die ("Ошибка подключения: " . mysqli_connect_error());
 

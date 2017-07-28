@@ -198,7 +198,7 @@ app.controller("personalInfoCtrl", [
       data.name = $scope.newQu.name;
       data.idPerson = $scope.doctor.id;
       return addQu.add(data).then(function(data) {
-        return $scope.doctor.specialities.push(data.data);
+        return $scope.doctor.qualifications.push(data.data);
       });
     };
     $scope.showSpFieldAction = function() {

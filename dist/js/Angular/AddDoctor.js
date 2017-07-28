@@ -433,62 +433,31 @@ var requirejs, require, define;
     };
 }());
 
-define("../../bower_components/almond/almond", function(){});
+define("../bower_components/almond/almond", function(){});
 
-var app;
-
-app = angular.module("personalInfoApp", [], function($httpProvider) {
-  $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
-  $httpProvider.defaults.transformRequest = [
-    function(data) {
-      var param;
-      param = function(obj) {
-        var fullSubName, i, innerObj, j, k, l, len, name, query, ref, ref1, subName, subValue, value;
-        query = '';
-        innerObj = [];
-        for (name in obj) {
-          value = obj[name];
-          if (value instanceof Array) {
-            for (i = j = 0, ref = value.length; 0 <= ref ? j <= ref : j >= ref; i = 0 <= ref ? ++j : --j) {
-              subValue = value[i];
-              fullSubName = name + '[' + i + ']';
-              innerObj[fullSubName] = subValue;
-              query += param(innerObj) + '&';
-            }
-          } else if (value instanceof Object) {
-            for (k = 0, len = value.length; k < len; k++) {
-              subName = value[k];
-              for (i = l = 0, ref1 = value.length; 0 <= ref1 ? l <= ref1 : l >= ref1; i = 0 <= ref1 ? ++l : --l) {
-                subValue = value[subName];
-                fullSubName = name + '[' + subName + ']';
-                innerObj[fullSubName] = subValue;
-                query += param(innerObj) + '&';
-              }
-            }
-          } else if (value !== void 0 && value !== null) {
-            query += encodeURIComponent(name) + '=' + encodeURIComponent(value) + '&';
-          }
-        }
-        if (query.length) {
-          return query.substr(0, query.length - 1);
-        } else {
-          return query;
-        }
-      };
-      if (angular.isObject(data) && String(data) !== '[object File]') {
-        return param(data);
-      } else {
-        return data;
-      }
-    }
-  ];
-});
-
-app.controller("personalInfoCtrl", [
-  '$scope', 'getPersonalInfo', 'getOptions', 'saveChanges', 'removeSP', 'addSP', 'addQu', function($scope, getPersonalInfo, getOptions, saveChanges, removeSP, addSP, addQu) {
-    var oldInfo, personId;
+app.controller("AddDoctorController", [
+  'getOptions', '$scope', 'savePersonSrv', function(getOptions, $scope, savePersonSrv) {
     $scope.doctor = {
-      isDoctor: false
+      name: "Кирилл",
+      surname: "Товпинец",
+      patername: "Александрович",
+      birthday: "1994-02-10",
+      EstName: "Витебский государственный медицинский институт",
+      AppName: "программист",
+      specialities: ["Врач-психиатр"],
+      qualifications: ["Врач-дерматолог"],
+      ResName: "Беларусь",
+      OrgName: "БелМАПО",
+      RegName: "Минск",
+      diploma_start: "2017-06-20",
+      tel_number: "+375(29)853-75-96",
+      DepName: "ЦИТ",
+      isDoctor: true,
+      insurance_number: "3100294E006PB9",
+      diploma_number: "123456789",
+      FacName: "ФИЭ",
+      exp: 10,
+      expAdd: 15
     };
     $scope.newSP = {
       name: ""
@@ -497,12 +466,12 @@ app.controller("personalInfoCtrl", [
       name: ""
     };
     getOptions.get().then(function(data) {
-      var country, department, est, faculty, makeAuto, organization, qualifications, region, specialities;
+      var app, country, department, est, faculty, makeAuto, organization, qualifications, region, specialities;
       makeAuto = function(data) {
-        var auto, j, len, value;
+        var auto, i, len, value;
         auto = [];
-        for (j = 0, len = data.length; j < len; j++) {
-          value = data[j];
+        for (i = 0, len = data.length; i < len; i++) {
+          value = data[i];
           auto.push(value.name);
         }
         return auto;
@@ -580,63 +549,31 @@ app.controller("personalInfoCtrl", [
         }
       });
     });
-    $(".date-picker").datepicker({
+    $("#AddpersonalInfo .date-picker").datepicker({
       dateFormat: "yy-mm-dd"
     });
-    $(".date-picker").datepicker("option", "disabled", true);
-    personId = document.location.href.split("=")[1];
-    oldInfo = {};
-    getPersonalInfo.get(personId).then(function(response) {
-      $scope.doctor.id = personId;
-      $scope.doctor = response.data.general;
-      $scope.doctor.specialities = response.data.specialities;
-      return $scope.doctor.qualifications = response.data.qualifications;
-    });
-    $scope.RefreshBtn = function(trigger) {
-      angular.copy($scope.doctor, oldInfo);
-      if (trigger) {
-        $('#personalInfo input').not('.not-changeble').removeAttr("readonly");
-        $(".date-picker").datepicker("option", "disabled", false);
-        $('hr').css("display", "none");
-        $('#save').css("display", "block");
-        $('#refresh').css("display", "none");
-        $('#cansel').css("display", "none");
-        return $('#canselRefresh').css("display", "block");
-      } else {
-        $('#personalInfo  input').not('.not-changeble').attr("readonly", "readonly");
-        $(".date-picker").datepicker("option", "disabled", true);
-        $('hr').css("display", "block");
-        $('#save').css("display", "none");
-        $('#refresh').css("display", "initial");
-        $('#cansel').css("display", "initial");
-        return $('#canselRefresh').css("display", "none");
-      }
-    };
-    $scope.CloseBtn = function() {
-      return parent.$.fancybox.close();
-    };
     $scope.triggerAdd = true;
     $scope.SaveNewSP = function() {
       if ($scope.newSP.name === "") {
         $("#personalSp input").css("box-shadow", "0 0 3px 0 #f00");
         return;
       }
-      data.name = $scope.newSP.name;
-      data.idPerson = $scope.doctor.id;
-      return addSP.add(data).then(function(data) {
-        return $scope.doctor.specialities.push(data.data);
-      });
+      $scope.doctor.specialities.push($scope.newSP.name);
+      $("#addSP span").removeClass("fa-times");
+      $("#addSP span").addClass("fa-plus");
+      $("#addSP").css("color", "green");
+      return $("#personalSp").css("display", "none");
     };
     $scope.SaveNewQu = function() {
       if ($scope.newQu.name === "") {
         $("#personalQu input").css("box-shadow", "0 0 3px 0 #f00");
         return;
       }
-      data.name = $scope.newQu.name;
-      data.idPerson = $scope.doctor.id;
-      return addQu.add(data).then(function(data) {
-        return $scope.doctor.qualifications.push(data.data);
-      });
+      $scope.doctor.qualifications.push($scope.newQu.name);
+      $("#addQu span").removeClass("fa-times");
+      $("#addQu span").addClass("fa-plus");
+      $("#addQu").css("color", "green");
+      return $("#personalQu").css("display", "none");
     };
     $scope.showSpFieldAction = function() {
       if ($scope.triggerAdd) {
@@ -670,62 +607,32 @@ app.controller("personalInfoCtrl", [
         return $scope.newQu.name = "";
       }
     };
-    return $scope.SaveBtn = function() {
-      var data, hasChaned, key, ref, value;
-      alert($scope.doctor.EstName);
-      data = {};
-      hasChaned = false;
-      ref = $scope.doctor;
-      for (key in ref) {
-        value = ref[key];
-        if (value !== oldInfo[key]) {
-          data[key] = value;
-          hasChaned = true;
-        }
-      }
-      if (hasChaned) {
-        data.id = personId;
-        return saveChanges.save(data).then(function(response) {
-          alert(response.data);
-          $('input').not('.not-changeble').attr("readonly", "readonly");
-          $('hr').css("display", "block");
-          $('#save').css("display", "none");
-          $('#refresh').css("display", "initial");
-          $('#cansel').css("display", "initial");
-          return $('#canselRefresh').css("display", "none");
-        });
-      } else {
-        return alert("NO changes");
-      }
+    $scope.ResetBtn = function() {
+      return $scope.doctor = {
+        specialities: [],
+        qualifications: []
+      };
+    };
+    return $scope.SavePerson = function() {
+      var data;
+      data = $scope.doctor;
+      return savePersonSrv.save(data).then(function(data) {
+        return alert(data.data);
+      });
     };
   }
 ]);
 
-define("personalInfo", function(){});
+define("AddDoctor", function(){});
 
-app.factory("getPersonalInfo", [
-  '$http', function($http) {
-    return {
-      get: function(id) {
-        return $http.get('php/getPersonalInfo.php?id=' + id);
-      }
-    };
-  }
-]);
+app.directive("profile", function() {
+  return {
+    restrict: 'E',
+    templateUrl: 'profile.html'
+  };
+});
 
-define("getPersonalInfo", function(){});
-
-app.factory("saveChanges", [
-  '$http', function($http) {
-    return {
-      save: function(data) {
-        return $http.post("./php/saveChanges.php", data);
-      }
-    };
-  }
-]);
-
-define("saveChanges", function(){});
+define("addForm", function(){});
 
 app.factory("getOptions", function($http) {
   return {
@@ -737,41 +644,15 @@ app.factory("getOptions", function($http) {
 
 define("getOptions", function(){});
 
-app.factory("removeSP", [
-  '$http', function($http) {
-    return {
-      "delete": function(data) {
-        return $http.get('php/removeSpeciality.php', data);
-      }
-    };
-  }
-]);
+app.factory("savePersonSrv", function($http) {
+  return {
+    save: function(data) {
+      return $http.post("php/savePerson.php", data);
+    }
+  };
+});
 
-define("removeSP", function(){});
-
-app.factory("addSP", [
-  '$http', function($http) {
-    return {
-      add: function(data) {
-        return $http.get('php/addSpeciality.php', data);
-      }
-    };
-  }
-]);
-
-define("addSP", function(){});
-
-app.factory("addQu", [
-  '$http', function($http) {
-    return {
-      add: function(data) {
-        return $http.get('php/addQualification.php', data);
-      }
-    };
-  }
-]);
-
-define("addQu", function(){});
+define("savePersonSrv", function(){});
 
 
-require(["personalInfo", "getPersonalInfo", "saveChanges", "getOptions", "removeSP", "addSP", "addQu"]);
+require(["AddDoctor", "addForm", "getOptions", "savePersonSrv"]);

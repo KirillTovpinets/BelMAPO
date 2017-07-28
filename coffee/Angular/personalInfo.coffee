@@ -179,7 +179,7 @@ app.controller "personalInfoCtrl", [ '$scope', 'getPersonalInfo', 'getOptions', 
 		data.name = $scope.newQu.name
 		data.idPerson = $scope.doctor.id
 		addQu.add(data).then (data) ->
-			$scope.doctor.specialities.push(data.data)
+			$scope.doctor.qualifications.push(data.data)
 
 	$scope.showSpFieldAction = ->
 		if $scope.triggerAdd

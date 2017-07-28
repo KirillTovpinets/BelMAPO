@@ -1,6 +1,6 @@
 extends layout
 block content
-			.content
+			.content(ng-controller="AddDoctorController")
 				.container-fluid
 					.row
 						.col-md-8
@@ -8,7 +8,7 @@ block content
 								.header 
 									h4.title Информация слушателя
 								.content
-									form(name="addNewDoctor")#personalInfo
+									form(name="addNewDoctor" ng-submit="addNewDoctor.$valid && SavePerson()" novalidate)#AddpersonalInfo
 										.row
 											.col-md-4
 												.form-group
@@ -24,25 +24,25 @@ block content
 													label Отчество
 													input(required type="text" ng-model="doctor.patername").form-control
 										.row
-											.col-md-4
+											.col-md-3
 												.form-group
 													label Дата рождения
 													input(required type="text" ng-model="doctor.birthday").date-picker.form-control
-											.col-md-5
+											.col-md-7
 												.form-group
 													label Учреждение образования
 													input(required type="text" ng-model="doctor.EstName").form-control#ee
-											.col-md-3
+											.col-md-2
 												.form-group
 													label Гражданство
-													input(trequired ype="text" ng-model="doctor.ResName").form-control#country
+													input(required ype="text" ng-model="doctor.ResName").form-control#country
 										.row
 											.col-md-12
 												.form-group		
 													label Специальность(и)
 													.specialities
 														span.speciality(ng-repeat="sp in doctor.specialities") 
-															span  
+															span {{ sp }} 
 														span#personalSp
 															input(type="text" ng-model="newSP.name").form-control-add.not-changeble.group-left
 															span.speciality.group-right
@@ -57,7 +57,7 @@ block content
 													label Квалификация(и)
 													.specialities
 														span.speciality(ng-repeat="qu in doctor.qualifications") 
-															span  
+															span {{ qu }}
 														span#personalQu
 															input(type="text" ng-model="newQu.name").form-control.inline-add.not-changeble.group-left
 															span.speciality.group-right
@@ -70,7 +70,7 @@ block content
 											.col-md-6
 												.form-group
 													label Кандидат медицинских наук
-													input(type="checkbox").regular-checkbox#KMN
+													input(type="checkbox" ng-model="doctor.isDoctor").regular-checkbox#KMN
 													label(for="KMN")
 											.col-md-6
 												.form-group
@@ -89,7 +89,7 @@ block content
 											.col-md-4
 												.form-group
 													label Контактный телефон
-													input(type="text" ng-model="doctor.tel_number").form-control
+													input(type="tel" ng-pattern="/^\\+375\\([0-9]{2}\\)[0-9]{3}\\-[0-9]{2}\\-[0-9]{2}$/" placeholder="+375(__)___-__-__" ng-model="doctor.tel_number").form-control
 										.row
 											.col-md-4
 												.form-group
@@ -103,8 +103,9 @@ block content
 												.form-group
 													label Опыт работы
 													div
-														input(type="number" min="0").form-control.half-width.pull-left
-														input(type="number" min="0").form-control.half-width.pull-right
+														input(type="number" min="0" max="99" ng-model="doctor.exp").form-control.half-width.pull-left
+														span(style="position:absolute; top:50%;") +
+														input(type="number" min="0" max="99" ng-model="doctor.expAdd").form-control.half-width.pull-right
 										.row
 											.col-md-3
 												.form-group
@@ -122,14 +123,9 @@ block content
 												.form-group
 													label Номер диплома
 													input(type="text" ng-model="doctor.diploma_number").form-control
-						.col-md-4
-							.card.card-user
-								.image
-									img(src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&amp;fm=jpg&amp;h=300&amp;q=75&amp;w=400" alt="...")
-								.content
-									.author
-										a(href="#")
-											img.avatar.border-gray(src="img/faces/avatar.png" alt="...")
-											h4.title 
-											small 
-									p.description.text-center(ng-show="") Кандидат медицинских наук 
+										.row
+											.col-md-2.col-md-offset-4
+												button(type="submit").btn.btn-success.pull-right Сохранить
+											.col-md-2
+												button(ng-click="ResetBtn()").btn.btn-danger.pull-right Сбросить
+						profile
