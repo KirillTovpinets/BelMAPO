@@ -23,6 +23,7 @@
 	$personId = $link["unique_Id"];
 	$mysqli->query("INSERT INTO personal_speciality (idPerson, idSpeciality) VALUES ('$personId','$spId')");
 
+	mysqli_close($mysqli);
 	$response["name"] = $newSp;
 
 	echo json_encode($response);

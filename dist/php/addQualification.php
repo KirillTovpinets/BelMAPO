@@ -23,6 +23,7 @@
 	$personId = $link["unique_Id"];
 	$mysqli->query("INSERT INTO personal_qualification (idPerson, idSpeciality) VALUES ('$personId','$quId')");
 
+	mysqli_close($mysqli);
 	$response["name"] = $newQu;
 
 	echo json_encode($response);

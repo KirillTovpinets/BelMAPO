@@ -24,7 +24,7 @@
 	$response["regionList"] = getOptions("SELECT name FROM `regions`", $mysqli);
 	$response["departmentList"] = getOptions("SELECT name FROM `personal_department`", $mysqli);
 	$response["facultyList"] = getOptions("SELECT name FROM `personal_faculty`", $mysqli);
-
+	mysqli_close($mysqli);
 	echo json_encode($response);
 	
 ?>

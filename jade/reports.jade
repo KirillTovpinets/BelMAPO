@@ -3,5 +3,74 @@ block content
 	.content
 		.container-fluid
 			.row
-				.col-md-12
-					
+				.col-md-4
+					.card
+						.header
+							h4.title Выберите параметры отчёта
+						.content(ng-controller="ReportsCtrl")
+							.places-buttons
+								form
+
+									//- $estArr = getArray($estObj);
+									//- $residArr = getArray($residObj);
+									//- $appArr = getArray($appObj);
+									//- $orgArr = getArray($orgObj);
+									//- $regArr = getArray($regObj);
+									//- $depArr = getArray($depObj);
+									//- $facArr = getArray($facObj);
+									.row
+										.col-md-12
+											.form-group.no-margin
+												label Учреждение образования
+												input(type="text" name="ee" ng-model="find.ee" ng-change="findAction()").form-control#ee
+										.col-md-12
+											.form-group.no-margin
+												label Гражданство
+												input(type="text" name="resid" ng-model="find.resid" ng-change="findAction()").form-control#resid
+										.col-md-12
+											.form-group.no-margin
+												label Дата получения диплома: с
+												.row
+													.col-md-6
+														input(type="text" ng-model="find.DipDateFrom").form-control#DipDateFrom
+													.col-md-6
+														input(type="text" ng-model="find.DipDateTo").form-control#DipDateTo
+												#DipDate
+										.col-md-12
+											.form-group.no-margin
+												label Должность
+												input(type="text" name="app" ng-model="find.app" ng-change="findAction()").form-control#app
+										.col-md-12
+											.form-group.no-margin
+												label Кандидат медицинских наук
+												input(type="checkbox" ng-model="find.isDoctor")
+										.col-md-12
+											.form-group.no-margin
+												label Организация
+												input(type="text" name="org" ng-model="find.org" ng-change="findAction()").form-control#org
+										.col-md-12
+											.form-group.no-margin
+												label Регион
+												input(type="text" name="reg" ng-model="find.reg" ng-change="findAction()").form-control#reg
+										.col-md-12
+											.form-group.no-margin
+												label Пол
+												select.form-control(name="gender" ng-model="find.gender" ng-change="findAction()" )
+													option(value="1" selected="selected") Мужской
+													option(value="0") Женский
+										.col-md-12
+											.form-group.no-margin
+												label Сотрудник
+												input(type="checkbox")
+										.col-md-12
+											.form-group.no-margin
+												label Опыт работы
+												input(type="number")
+										.col-md-12
+											.form-group.no-margin
+												label Отдел
+												input(type="text" name="dep" ng-model="find.dep" ng-change="findAction()").form-control#dep
+										.col-md-12
+											.form-group.no-margin
+												label Факультет
+												input(type="text" name="fac" ng-model="find.fac" ng-change="findAction()").form-control#fac

@@ -82,9 +82,8 @@
 	}
 	$query .= " WHERE id = '$id'";
 
-	echo $query;
-	// $mysqli->query($query) or die ("Ошибка: " . mysqli_error($mysqli));
-	// mysqli_close($mysqli);
+	$mysqli->query($query) or die ("Ошибка: " . mysqli_error($mysqli));
+	mysqli_close($mysqli);
 
 
 	function makeQuery($param, $table, $alias){

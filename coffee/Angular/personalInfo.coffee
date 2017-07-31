@@ -47,25 +47,6 @@ app.controller "personalInfoCtrl", [ '$scope', 'getPersonalInfo', 'getOptions', 
 		department = makeAuto data.data.departmentList
 		faculty = makeAuto data.data.facultyList
 
-		# ee
-		# country
-		# app
-		# organization
-		# region
-		# department
-		# faculty
-
-		# ng-model="doctor.EstName"
-		# ng-model="doctor.ResName"
-		# ng-model="doctor.diploma_start"
-		# ng-model="doctor.AppName"
-		# ng-model="doctor.tel_number"
-		# ng-model="doctor.OrgName"
-		# ng-model="doctor.RegName"
-		# ng-model="doctor.insurance_number"
-		# ng-model="doctor.DepName"
-		# ng-model="doctor.FacName"
-		# ng-model="doctor.diploma_number"
 		$( "#ee" ).autocomplete {
 			source: est
 			minLength: 9
@@ -212,7 +193,6 @@ app.controller "personalInfoCtrl", [ '$scope', 'getPersonalInfo', 'getOptions', 
 			$scope.newQu.name = ""
 
 	$scope.SaveBtn = ->
-		alert $scope.doctor.EstName
 		data = {}
 		hasChaned = false
 		for key, value of $scope.doctor

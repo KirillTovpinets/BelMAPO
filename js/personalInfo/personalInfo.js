@@ -235,7 +235,6 @@ app.controller("personalInfoCtrl", [
     };
     return $scope.SaveBtn = function() {
       var data, hasChaned, key, ref, value;
-      alert($scope.doctor.EstName);
       data = {};
       hasChaned = false;
       ref = $scope.doctor;

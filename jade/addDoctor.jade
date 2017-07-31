@@ -24,6 +24,11 @@ block content
 													label Отчество
 													input(required type="text" ng-model="doctor.patername").form-control
 										.row
+											.col-md-12
+												.form-group
+													label ФИО в дательном падеже
+													input(required type="text" ng-model="doctor.in_to_form" placeholder="Например: Иванову Ивану Ивановичу").form-control
+										.row
 											.col-md-3
 												.form-group
 													label Дата рождения
@@ -67,16 +72,27 @@ block content
 															button.add(ng-click="showQuFieldAction()")
 																span.fa.fa-plus
 										.row
-											.col-md-6
+											.col-md-4
 												.form-group
-													label Кандидат медицинских наук
+													label Канд-т мед. наук
 													input(type="checkbox" ng-model="doctor.isDoctor").regular-checkbox#KMN
 													label(for="KMN")
-											.col-md-6
+											.col-md-4
 												.form-group
 													label Сотрудник
-													input(type="checkbox").regular-checkbox#isCowoker
+													input(type="checkbox" ng-model="doctor.isCowoker").regular-checkbox#isCowoker
 													label(for="isCowoker")
+											.col-md-4
+												.form-group
+													label Пол
+													div
+														label Мужской
+														input(type="radio" name="gender" value="1" ng-model="doctor.isMale" checked)#isMale.regular-radio
+														label(for="isMale")
+														label Женский
+														input(type="radio" name="gender" value="0" ng-model="doctor.isMale")#isFemale.regular-radio
+														label(for="isFemale")
+
 										.row
 											.col-md-4
 												.form-group

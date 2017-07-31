@@ -14,7 +14,8 @@ app.controller "AddDoctorController", ['getOptions','$scope', 'savePersonSrv', (
 		diploma_start: "2017-06-20"
 		tel_number: "+375(29)853-75-96"
 		DepName: "ЦИТ"
-		isDoctor: true
+		isDoctor: false
+		isCowoker: false
 		insurance_number: "3100294E006PB9"
 		diploma_number: "123456789"
 		FacName: "ФИЭ"
