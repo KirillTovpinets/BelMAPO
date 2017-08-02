@@ -635,14 +635,7 @@ app.directive("profile", function() {
 
 define("addForm", function(){});
 
-app.factory("getOptions", function($http) {
-  return {
-    get: function() {
-      return $http.get("./php/getOptions.php");
-    }
-  };
-});
-
+;
 define("getOptions", function(){});
 
 app.factory("savePersonSrv", function($http) {

@@ -84,9 +84,6 @@
 	}else{
 		$query .= " LIMIT $count OFFSET $offset";
 	}
-	// echo $query;
-
-	// print_r($_POST);	
 	$result = $mysqli->query($query) or die ("Ошибка запроса: " . mysqli_error($mysqli));
 	mysqli_close($mysqli);
 

@@ -17,7 +17,6 @@ gulp.task 'jade', ->
 	.pipe do jade
 	.pipe gulp.dest 'dist'
 	.pipe do connect.reload
-
 gulp.task 'stylus', ->
 	gulp.src 'stylus/*.styl'
 	.pipe stylus set: ['compress']
@@ -77,8 +76,8 @@ gulp.task 'buildReports', ['coffeeReports'], ->
 	rjs
 		baseUrl: 'js'
 		name: '../bower_components/almond/almond'
-		include: ['Reports', 'getParams']
-		insertRequire: ['Reports', 'getParams']
+		include: ['Reports', 'getParams', 'buildReport']
+		insertRequire: ['Reports', 'getParams', 'buildReport']
 		out: 'Reports.js'
 		wrap: off
 	.pipe gulp.dest 'dist/js/Angular'
