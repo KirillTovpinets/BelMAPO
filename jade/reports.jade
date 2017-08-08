@@ -10,43 +10,43 @@ block content
 						.content
 							ul.nav.nav-tabs
 								li.active
-									a(href="#personalData" data-toggle="tab") Личные
+									a(href="#peronalData" data-toggle="tab") Личные
 								li
 									a(href="#educationalData" data-toggle="tab") Обучение
 							.tab-content
-								.tab-pane.active#personalData
+								.tab-pane.active#peronalData
 									.places-buttons
 										form
 											.row
 												.col-md-12
 													.form-group.no-margin
 														label Учреждение образования
-														input(type="text" name="ee" ng-model="filterParams.personal.est" ng-change="reportAction()").form-control#ee
+														input(type="text" name="ee" ng-model="filterParams.est" ng-change="reportAction(1)").form-control#ee
 												.col-md-12
 													.form-group.no-margin
 														label Гражданство
-														input(type="text" name="resid" ng-model="filterParams.personal.resid" ng-change="reportAction()").form-control#resid
+														input(type="text" name="resid" ng-model="filterParams.resid" ng-change="reportAction(1)").form-control#resid
 												.col-md-12
 													.form-group.no-margin
 														label Дата получения диплома:
 														.row
 															.col-md-6
-																input(type="text" ng-model="filterParams.personal.DipDateFrom" ng-change="reportAction()").form-control#DipDateFrom
+																input(type="text" ng-model="filterParams.DipDateFrom" ng-change="reportAction(1)").form-control#DipDateFrom
 															.col-md-6
-																input(type="text" ng-model="filterParams.personal.DipDateTo" ng-change="reportAction()").form-control#DipDateTo
+																input(type="text" ng-model="filterParams.DipDateTo" ng-change="reportAction(1)").form-control#DipDateTo
 												.col-md-12
 													.form-group.no-margin
 														label Должность
-														input(type="text" name="app" ng-model="filterParams.personal.app" ng-change="reportAction()").form-control#app
+														input(type="text" name="app" ng-model="filterParams.app" ng-change="reportAction(1)").form-control#app
 												.col-md-12
 													.form-group.no-margin
 														label Кандидат медицинских наук
-														input(type="checkbox" ng-model="filterParams.personal.isDoctor" ng-change="reportAction(1)").regular-checkbox#kmn
+														input(type="checkbox" ng-model="filterParams.isDoctor" ng-change="reportAction(1)").regular-checkbox#kmn
 														label(for="kmn")
 												.col-md-12
 													.form-group.no-margin
 														label Организация
-														input(type="text" name="org" ng-model="filterParams.personal.org" ng-change="reportAction()").form-control#org
+														input(type="text" name="org" ng-model="filterParams.org" ng-change="reportAction(1)").form-control#org
 												.col-md-12
 													.form-group.no-margin
 														label Область
@@ -60,27 +60,27 @@ block content
 												.col-md-5
 													.form-group.no-margin
 														label Пол
-														select.form-control(name="gender" ng-model="filterParams.personal.gender" ng-change="reportAction()" )
+														select.form-control(name="gender" ng-model="filterParams.gender" ng-change="reportAction(1)" )
 															option(value="1" selected="selected") Мужской
 															option(value="0") Женский
 												.col-md-3
 													.form-group.no-margin
 														label Сотрудник
-														input(type="checkbox" ng-model="filterParams.personal.isCowoker" ng-change="reportAction()").regular-checkbox#isCowoker
+														input(type="checkbox" ng-model="filterParams.isCowoker" ng-change="reportAction(1)").regular-checkbox#isCowoker
 														label(for="isCowoker")
 												.col-md-4
 													.form-group.no-margin
 														label Опыт работы
-														input(type="number" ng-model="filterParams.personal.experiance" ng-change="reportAction()").form-control
+														input(type="number" ng-model="filterParams.experiance" ng-change="reportAction(1)").form-control
 												.col-md-12
 													.form-group.no-margin
 														label Отдел
-														input(type="text" name="dep" ng-model="filterParams.personal.dep" ng-change="reportAction()").form-control#dep
+														input(type="text" name="dep" ng-model="filterParams.dep" ng-change="reportAction(1)").form-control#dep
 												.col-md-12
 													.form-group.no-margin
 														label Факультет
-														input(type="text" name="fac" ng-model="filterParams.personal.fac" ng-change="reportAction()").form-control#fac
-								.tab-pane.active#educationalData
+														input(type="text" name="fac" ng-model="filterParams.fac" ng-change="reportAction(1)").form-control#fac
+								.tab-pane#educationalData
 									.places-buttons
 										form
 											.row
@@ -97,11 +97,11 @@ block content
 												.col-md-12
 													.form-group.no-margin
 														label Кафедра
-														input(type="text" name="cathedra" ng-model="filterParams.educational.cathedra" ng-change="reportAction()").form-control#cathedra
+														input(type="text" name="cathedra" ng-model="filterParams.cathedra" ng-change="reportAction()").form-control#cathedra
 												.col-md-12
 													.form-group.no-margin
 														label Курс
-														input(type="text" name="course" ng-model="filterParams.educational.course" ng-change="reportAction()").form-control#course
+														input(type="text" name="course" ng-model="filterParams.course" ng-change="reportAction()").form-control#course
 												.col-md-12
 													.form-group.no-margin
 														label Форма обучения
@@ -115,7 +115,7 @@ block content
 												.col-md-12
 													.form-group.no-margin
 														label Номер группы
-														input(type="number" ng-model="filterParams.educational.groupNumber" ng-change="reportAction()")#groupNumber.form-control
+														input(type="number" ng-model="filterParams.groupNumber" ng-change="reportAction()")#groupNumber.form-control
 												.col-md-12
 													.form-group.no-margin
 														label Тип обучения
@@ -130,11 +130,19 @@ block content
 					.card
 						.header
 							h4.title Результаты
-						.content
+						.content.table-responsive.table-full-width
 							.col-md-2 
 								h5 Всего
 							.col.-md-10#Results
 								h2 {{ total }}
+							table.table.table-hover.table-striped
+								thead
+									th Параметр
+									th Показатель
+								tbody
+									tr(ng-repeat="parameter in parameters")
+										td {{ parameter.label }}
+										td {{ parameter.value }}
 
 
 

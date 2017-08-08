@@ -66,8 +66,8 @@ gulp.task 'buildAddDoctor', ['coffeeAddDoctor'], ->
 	rjs
 		baseUrl: 'js'
 		name: '../bower_components/almond/almond'
-		include: ['AddDoctor', 'addForm', 'getOptions','savePersonSrv']
-		insertRequire: ['AddDoctor', 'addForm', 'getOptions','savePersonSrv']
+		include: ['AddDoctor', 'addForm', 'lettersonly', 'getOptions','savePersonSrv']
+		insertRequire: ['AddDoctor', 'addForm', 'lettersonly', 'getOptions','savePersonSrv']
 		out: 'AddDoctor.js'
 		wrap: off
 	.pipe gulp.dest 'dist/js/Angular'

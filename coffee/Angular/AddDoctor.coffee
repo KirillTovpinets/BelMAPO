@@ -24,6 +24,13 @@ app.controller "AddDoctorController", ['getOptions','$scope', 'savePersonSrv', (
 	}
 	$scope.newSP = { name: ""}
 	$scope.newQu = { name: ""}
+	$scope.ShowEducInfo = ->
+		$("#personalInfo").removeClass("active");
+		$(".nav-tabs a[href='#personalInfo']").parent().removeClass("active");
+		$(".nav-tabs a[href='#personalInfo']").attr "aria-expanded", "false"
+		$("#studInfo").addClass("active");
+		$(".nav-tabs a[href='#studInfo']").parent().addClass("active");
+		$(".nav-tabs a[href='#studInfo']").attr "aria-expanded", "true"
 	getOptions.get().then (data) ->
 		makeAuto = (data) ->
 			auto = []
@@ -41,6 +48,25 @@ app.controller "AddDoctorController", ['getOptions','$scope', 'savePersonSrv', (
 		department = makeAuto data.data.departmentList
 		faculty = makeAuto data.data.facultyList
 
+		$scope.faculties = data.data.mapo_faculties
+		cathedras = makeAuto data.data.mapo_cathedra
+		course = makeAuto data.data.mapo_course
+		$scope.educType = data.data.mapo_educType
+		$scope.residPlace = data.data.mapo_ResidPlace
+		$scope.forms = data.data.mapo_formEduc
+
+		$("#cathedra").autocomplete {
+			source: cathedras
+			minLength: 5
+			select: (event, ui) ->
+				$scope.doctor.cathedra = this.value
+		}
+		$("#courseName").autocomplete {
+			source: course
+			minLength: 5
+			select: (event, ui) ->
+				$scope.doctor.course = this.value
+		}
 		$( "#ee" ).autocomplete {
 			source: est
 			minLength: 9
@@ -100,7 +126,6 @@ app.controller "AddDoctorController", ['getOptions','$scope', 'savePersonSrv', (
 			select: (event, ui) ->
 				$scope.doctor.FacName = this.value
 		}
-
 	$("#AddpersonalInfo .date-picker").datepicker({
 		dateFormat: "yy-mm-dd"
 	})
@@ -140,7 +165,8 @@ app.controller "AddDoctorController", ['getOptions','$scope', 'savePersonSrv', (
 			$("#personalSp").css "display", "none"
 			$scope.triggerAdd = !$scope.triggerAdd
 			$scope.newSP.name = ""
-
+	$scope.Error = ->
+		notify.showNotification "Ошибка. Проверьте правильность введённых данных", 'danger'
 	$scope.showQuFieldAction = ->
 		if $scope.triggerAdd
 			$("#addQu span").removeClass "fa-plus"
@@ -163,5 +189,6 @@ app.controller "AddDoctorController", ['getOptions','$scope', 'savePersonSrv', (
 	$scope.SavePerson = ->
 		data = $scope.doctor
 		savePersonSrv.save(data).then (data) ->
-			alert data.data
+			notify.showNotification "Слушатель зачислен", 'success'
+			$scope.doctor = {}
 ]

@@ -8,140 +8,189 @@ block content
 								.header 
 									h4.title Информация слушателя
 								.content
-									form(name="addNewDoctor" ng-submit="addNewDoctor.$valid && SavePerson()" novalidate)#AddpersonalInfo
-										.row
-											.col-md-4
-												.form-group
-													label Фамилия
-													input(required type="text" ng-model="doctor.surname").form-control
-											
-											.col-md-4
-												.form-group
-													label Имя
-													input(required type="text" ng-model="doctor.name").form-control
-											.col-md-4
-												.form-group
-													label Отчество
-													input(required type="text" ng-model="doctor.patername").form-control
-										.row
-											.col-md-12
-												.form-group
-													label ФИО в дательном падеже
-													input(required type="text" ng-model="doctor.in_to_form" placeholder="Например: Иванову Ивану Ивановичу").form-control
-										.row
-											.col-md-3
-												.form-group
-													label Дата рождения
-													input(required type="text" ng-model="doctor.birthday").date-picker.form-control
-											.col-md-7
-												.form-group
-													label Учреждение образования
-													input(required type="text" ng-model="doctor.EstName").form-control#ee
-											.col-md-2
-												.form-group
-													label Гражданство
-													input(required ype="text" ng-model="doctor.ResName").form-control#country
-										.row
-											.col-md-12
-												.form-group		
-													label Специальность(и)
-													.specialities
-														span.speciality(ng-repeat="sp in doctor.specialities") 
-															span {{ sp }} 
-														span#personalSp
-															input(type="text" ng-model="newSP.name").form-control-add.not-changeble.group-left
-															span.speciality.group-right
-																button(ng-click="SaveNewSP()").save
-																	span.fa.fa-floppy-o
-														span.speciality#addSP
-															button.add(ng-click="showSpFieldAction()")
-																span.fa.fa-plus
-										.row
-											.col-md-12
-												.form-group
-													label Квалификация(и)
-													.specialities
-														span.speciality(ng-repeat="qu in doctor.qualifications") 
-															span {{ qu }}
-														span#personalQu
-															input(type="text" ng-model="newQu.name").form-control.inline-add.not-changeble.group-left
-															span.speciality.group-right
-																button(ng-click="SaveNewQu()").save
-																	span.fa.fa-floppy-o
-														span.speciality#addQu
-															button.add(ng-click="showQuFieldAction()")
-																span.fa.fa-plus
-										.row
-											.col-md-4
-												.form-group
-													label Канд-т мед. наук
-													input(type="checkbox" ng-model="doctor.isDoctor").regular-checkbox#KMN
-													label(for="KMN")
-											.col-md-4
-												.form-group
-													label Сотрудник
-													input(type="checkbox" ng-model="doctor.isCowoker").regular-checkbox#isCowoker
-													label(for="isCowoker")
-											.col-md-4
-												.form-group
-													label Пол
-													div
-														label Мужской
-														input(type="radio" name="gender" value="1" ng-model="doctor.isMale" checked)#isMale.regular-radio
-														label(for="isMale")
-														label Женский
-														input(type="radio" name="gender" value="0" ng-model="doctor.isMale")#isFemale.regular-radio
-														label(for="isFemale")
+									form(name="addNewDoctor" ng-submit="(addNewDoctor.$valid && SavePerson()) || Error()" novalidate)#AddpersonalInfo
+										ul.nav.nav-tabs
+											li.active
+												a(href="#personalInfo" data-toggle="tab") Личные
+											li
+												a(href="#studInfo" data-toggle="tab") Обучение
+										.tab-content
+											.tab-pane#personalInfo.active
+												.row
+													.col-md-4
+														.form-group
+															label Фамилия
+															input(required only-letters-input type="text" name="name" ng-model="doctor.surname").form-control
+													.col-md-4
+														.form-group
+															label Имя
+															input(required only-letters-input type="text" ng-model="doctor.name").form-control
+													.col-md-4
+														.form-group
+															label Отчество
+															input(required only-letters-input type="text" ng-model="doctor.patername").form-control
+												.row
+													.col-md-12
+														.form-group
+															label ФИО в дательном падеже
+															input(required only-letters-input type="text" ng-model="doctor.in_to_form" placeholder="Например: Иванову Ивану Ивановичу").form-control
+												.row
+													.col-md-3
+														.form-group
+															label Дата рождения
+															input(required type="text" ng-model="doctor.birthday").date-picker.form-control
+													.col-md-7
+														.form-group
+															label Учреждение образования
+															input(required type="text" ng-model="doctor.EstName").form-control#ee
+													.col-md-2
+														.form-group
+															label Гражданство
+															input(required ype="text" ng-model="doctor.ResName").form-control#country
+												.row
+													.col-md-12
+														.form-group		
+															label Специальность(и)
+															.specialities
+																span.speciality(ng-repeat="sp in doctor.specialities") 
+																	span {{ sp }} 
+																span#personalSp
+																	input(type="text" ng-model="newSP.name").form-control-add.not-changeble.group-left
+																	span.speciality.group-right
+																		button(ng-click="SaveNewSP()").save
+																			span.fa.fa-floppy-o
+																span.speciality#addSP
+																	button.add(ng-click="showSpFieldAction()")
+																		span.fa.fa-plus
+												.row
+													.col-md-12
+														.form-group
+															label Квалификация(и)
+															.specialities
+																span.speciality(ng-repeat="qu in doctor.qualifications") 
+																	span {{ qu }}
+																span#personalQu
+																	input(type="text" ng-model="newQu.name").form-control.inline-add.not-changeble.group-left
+																	span.speciality.group-right
+																		button(ng-click="SaveNewQu()").save
+																			span.fa.fa-floppy-o
+																span.speciality#addQu
+																	button.add(ng-click="showQuFieldAction()")
+																		span.fa.fa-plus
+												.row
+													.col-md-4
+														.form-group
+															label Канд-т мед. наук
+															input(type="checkbox" ng-model="doctor.isDoctor").regular-checkbox#KMN
+															label(for="KMN")
+													.col-md-4
+														.form-group
+															label Сотрудник
+															input(type="checkbox" ng-model="doctor.isCowoker").regular-checkbox#isCowoker
+															label(for="isCowoker")
+													.col-md-4
+														.form-group
+															label Пол
+															div
+																label Мужской
+																input(type="radio"  name="gender" value="1" ng-model="doctor.isMale")#isMale.regular-radio
+																label(for="isMale")
+																label Женский
+																input(type="radio" name="gender" value="0" ng-model="doctor.isMale")#isFemale.regular-radio
+																label(for="isFemale")
 
-										.row
-											.col-md-4
-												.form-group
-													label Дата получения диплома
-													input(type="text" ng-model="doctor.diploma_start").date-picker.form-control
-											.col-md-4
-												.form-group
-													label Должность
-													input(type="text" ng-model="doctor.AppName").form-control
-											.col-md-4
-												.form-group
-													label Контактный телефон
-													input(type="tel" ng-pattern="/^\\+375\\([0-9]{2}\\)[0-9]{3}\\-[0-9]{2}\\-[0-9]{2}$/" placeholder="+375(__)___-__-__" ng-model="doctor.tel_number").form-control
-										.row
-											.col-md-4
-												.form-group
-													label Организация
-													input(type="text" ng-model="doctor.OrgName").form-control
-											.col-md-4
-												.form-group
-													label Область
-													input(type="text" ng-model="doctor.RegName").form-control
-											.col-md-4
-												.form-group
-													label Опыт работы
-													div
-														input(type="number" min="0" max="99" ng-model="doctor.exp").form-control.half-width.pull-left
-														span(style="position:absolute; top:50%;") +
-														input(type="number" min="0" max="99" ng-model="doctor.expAdd").form-control.half-width.pull-right
-										.row
-											.col-md-3
-												.form-group
-													label Страховой номер
-													input(type="text" ng-model="doctor.insurance_number").form-control
-											.col-md-3
-												.form-group
-													label Отдел
-													input(type="text" ng-model="doctor.DepName").form-control
-											.col-md-3
-												.form-group
-													label Факультет
-													input(type="text" ng-model="doctor.FacName").form-control
-											.col-md-3
-												.form-group
-													label Номер диплома
-													input(type="text" ng-model="doctor.diploma_number").form-control
-										.row
-											.col-md-2.col-md-offset-4
-												button(type="submit").btn.btn-success.pull-right Сохранить
-											.col-md-2
-												button(ng-click="ResetBtn()").btn.btn-danger.pull-right Сбросить
+												.row
+													.col-md-4
+														.form-group
+															label Дата получения диплома
+															input(type="text" ng-model="doctor.diploma_start").date-picker.form-control
+													.col-md-4
+														.form-group
+															label Должность
+															input(type="text" ng-model="doctor.AppName").form-control
+													.col-md-4
+														.form-group
+															label Контактный телефон
+															input(type="tel" ng-pattern="/^\\+375\\([0-9]{2}\\)[0-9]{3}\\-[0-9]{2}\\-[0-9]{2}$/" placeholder="+375(__)___-__-__" ng-model="doctor.tel_number").form-control
+												.row
+													.col-md-4
+														.form-group
+															label Организация
+															input(type="text" ng-model="doctor.OrgName").form-control
+													.col-md-4
+														.form-group
+															label Область
+															input(type="text" ng-model="doctor.RegName").form-control
+													.col-md-4
+														.form-group
+															label Опыт работы
+															div
+																input(type="number" min="0" max="99" ng-model="doctor.exp").form-control.half-width.pull-left
+																span(style="position:absolute; top:50%;") +
+																input(type="number" min="0" max="99" ng-model="doctor.expAdd").form-control.half-width.pull-right
+												.row
+													.col-md-3
+														.form-group
+															label Страховой номер
+															input(type="text" ng-model="doctor.insurance_number").form-control
+													.col-md-3
+														.form-group
+															label Отдел
+															input(type="text" ng-model="doctor.DepName").form-control
+													.col-md-3
+														.form-group
+															label Факультет
+															input(type="text" ng-model="doctor.FacName").form-control
+													.col-md-3
+														.form-group
+															label Номер диплома
+															input(type="text" ng-model="doctor.diploma_number").form-control
+												.row
+													.col-md-12
+														button(ng-click="ShowEducInfo()").btn.btn-block.btn-primary Далее
+											.tab-pane#studInfo
+												.row
+													.col-md-6
+														.form-group
+															label Факультет
+															.form-group(ng-repeat="faculty in faculties")
+																input(required id="faculty-{{ faculty.id }}" type="radio" name="faculty" value="{{ faculty.id }}" ng-model="doctor.facultyMAPO").regular-radio
+																label(for="faculty-{{ faculty.id }}")
+																label {{ faculty.name }}
+													
+													.col-md-6
+														.form-group
+															label Кафедра
+															input(required type="text" ng-model="doctor.cathedra")#cathedra.form-control
+													.col-md-12
+														.form-group
+															label Курс
+															input(required type="text" ng-model="doctor.course")#courseName.form-control
+												.row
+													.col-md-5
+														.form-group
+															label Тип обучения
+															.form-group(ng-repeat="type in educType")
+																input(required id="typeEduc-{{ type.id }}" ng-model="doctor.educType" type="radio" value="{{ type.id }}" name="typeEduc").regular-radio
+																label(for="typeEduc-{{ type.id }}")
+																label {{ type.name }}
+													.col-md-3
+														.form-group
+															label Место проживания
+															.form-group(ng-repeat="resid in residPlace")
+																input(required id="residence-{{ resid.id }}" ng-model="doctor.residence" type="radio" name="residence" value="{{ resid.id }}").regular-radio
+																label(for="residence-{{ resid.id }}")
+																label {{ resid.name }}
+													.col-md-4
+														.form-group
+															label Форма обучения
+															.form-group(ng-repeat="form in forms")
+																input(required id="form-{{ form.id }}" ng-model="doctor.formEduc" type="radio" name="form" value="{{ form.id }} ").regular-radio
+																label(for="form-{{ form.id }}")
+																label {{ form.name }}
+												.row
+													.col-md-2.col-md-offset-4
+														button(type="submit").btn.btn-success.pull-right Сохранить
+													.col-md-2
+														button(ng-click="ResetBtn()").btn.btn-danger.pull-right Сбросить
 						profile

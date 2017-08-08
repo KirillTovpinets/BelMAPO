@@ -29,8 +29,16 @@ app.controller("AddDoctorController", [
     $scope.newQu = {
       name: ""
     };
+    $scope.ShowEducInfo = function() {
+      $("#personalInfo").removeClass("active");
+      $(".nav-tabs a[href='#personalInfo']").parent().removeClass("active");
+      $(".nav-tabs a[href='#personalInfo']").attr("aria-expanded", "false");
+      $("#studInfo").addClass("active");
+      $(".nav-tabs a[href='#studInfo']").parent().addClass("active");
+      return $(".nav-tabs a[href='#studInfo']").attr("aria-expanded", "true");
+    };
     getOptions.get().then(function(data) {
-      var app, country, department, est, faculty, makeAuto, organization, qualifications, region, specialities;
+      var app, cathedras, country, course, department, est, faculty, makeAuto, organization, qualifications, region, specialities;
       makeAuto = function(data) {
         var auto, i, len, value;
         auto = [];
@@ -49,6 +57,26 @@ app.controller("AddDoctorController", [
       region = makeAuto(data.data.regionList);
       department = makeAuto(data.data.departmentList);
       faculty = makeAuto(data.data.facultyList);
+      $scope.faculties = data.data.mapo_faculties;
+      cathedras = makeAuto(data.data.mapo_cathedra);
+      course = makeAuto(data.data.mapo_course);
+      $scope.educType = data.data.mapo_educType;
+      $scope.residPlace = data.data.mapo_ResidPlace;
+      $scope.forms = data.data.mapo_formEduc;
+      $("#cathedra").autocomplete({
+        source: cathedras,
+        minLength: 5,
+        select: function(event, ui) {
+          return $scope.doctor.cathedra = this.value;
+        }
+      });
+      $("#courseName").autocomplete({
+        source: course,
+        minLength: 5,
+        select: function(event, ui) {
+          return $scope.doctor.course = this.value;
+        }
+      });
       $("#ee").autocomplete({
         source: est,
         minLength: 9,
@@ -155,6 +183,9 @@ app.controller("AddDoctorController", [
         return $scope.newSP.name = "";
       }
     };
+    $scope.Error = function() {
+      return notify.showNotification("Ошибка. Проверьте правильность введённых данных", 'danger');
+    };
     $scope.showQuFieldAction = function() {
       if ($scope.triggerAdd) {
         $("#addQu span").removeClass("fa-plus");
@@ -181,7 +212,8 @@ app.controller("AddDoctorController", [
       var data;
       data = $scope.doctor;
       return savePersonSrv.save(data).then(function(data) {
-        return alert(data.data);
+        notify.showNotification("Слушатель зачислен", 'success');
+        return $scope.doctor = {};
       });
     };
   }

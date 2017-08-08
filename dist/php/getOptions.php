@@ -24,7 +24,13 @@
 	$response["regionList"] = getOptions("SELECT name FROM `regions`", $mysqli);
 	$response["departmentList"] = getOptions("SELECT name FROM `personal_department`", $mysqli);
 	$response["facultyList"] = getOptions("SELECT name FROM `personal_faculty`", $mysqli);
+
+	$response["mapo_faculties"] = getOptions("SELECT * FROM `faculties`", $mysqli);
+	$response["mapo_cathedra"] = getOptions("SELECT * FROM `cathedras`", $mysqli);
+	$response["mapo_course"] = getOptions("SELECT * FROM `cources`", $mysqli);
+	$response["mapo_educType"] = getOptions("SELECT * FROM `educType`", $mysqli);
+	$response["mapo_ResidPlace"] = getOptions("SELECT * FROM `Residence`", $mysqli);
+	$response["mapo_formEduc"] = getOptions("SELECT * FROM `formofeducation`", $mysqli);
 	mysqli_close($mysqli);
 	echo json_encode($response);
-	
 ?>
